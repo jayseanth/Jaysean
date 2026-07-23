@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jaysean · รายได้ของฉัน — Sales Income Tracker</title>
+<style>
+  :root{
+    --bg:#eef2f9;--card:#fff;--ink:#1c2536;--sub:#6b7688;--line:#e5eaf3;
+    --blue:#2f6bd8;--gold:#c79a3e;--green:#1ea567;--amber:#e0972a;--red:#e05555;--pink:#d472a2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Sarabun",sans-serif;line-height:1.55;padding:16px}
+  .wrap{max-width:760px;margin:0 auto}
+  h1{font-size:20px;font-weight:800}
+  h1 .g{color:var(--gold)}
+  .sub{color:var(--sub);font-size:12.5px;margin-top:2px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 1px 3px rgba(20,30,60,.05);margin-top:14px}
+  label{display:block;font-size:13px;color:var(--sub);font-weight:600;margin-bottom:6px}
+  .inp{display:flex;align-items:center;gap:10px}
+  .inp input[type=number]{flex:1;font-size:26px;font-weight:800;color:var(--blue);border:2px solid var(--line);border-radius:12px;padding:10px 14px;width:100%;text-align:right;font-variant-numeric:tabular-nums}
+  input[type=range]{width:100%;accent-color:var(--gold);height:8px;margin-top:12px}
+  .hero{background:linear-gradient(135deg,#1f3b57,#2f6bd8);color:#fff;border:none}
+  .hero .l{font-size:13px;opacity:.9;font-weight:600}
+  .hero .big{font-size:44px;font-weight:900;letter-spacing:.5px;margin:2px 0;font-variant-numeric:tabular-nums}
+  .hero .pk{font-size:13px;opacity:.92}
+  .quota{margin-top:14px}
+  .qbar{height:26px;background:rgba(255,255,255,.22);border-radius:13px;overflow:hidden;position:relative}
+  .qbar>div{height:100%;background:linear-gradient(90deg,#e6c877,#fff2cf);border-radius:13px;transition:.3s;min-width:2px}
+  .qbar .qtxt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#1f3b57}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:620px){.kpis{grid-template-columns:repeat(2,1fr)}}
+  .kpi{background:#f7f9fd;border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center}
+  .kpi .l{font-size:11px;color:var(--sub);font-weight:700}
+  .kpi .n{font-size:20px;font-weight:800;margin-top:3px;font-variant-numeric:tabular-nums}
+  h2{font-size:13px;text-transform:uppercase;letter-spacing:.6px;color:var(--sub);font-weight:800;margin-bottom:12px}
+  .ms{display:flex;flex-direction:column;gap:10px}
+  .msrow{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:#f7f9fd}
+  .msrow.hit{background:#e9f8f1;border-color:#a9e3c9}
+  .msdot{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;flex-shrink:0;background:#dfe5ef;color:#8a94a6}
+  .msrow.hit .msdot{background:var(--green);color:#fff}
+  .msinfo{flex:1;font-size:13px}
+  .msinfo b{font-size:14px}
+  .msamt{font-weight:800;font-variant-numeric:tabular-nums}
+  .next{margin-top:12px;background:#fff6e0;border:1px dashed var(--gold);border-radius:12px;padding:12px 14px;font-size:13.5px;font-weight:600;color:#8a6410}
+  .zone{display:grid;grid-template-columns:130px 1fr 80px;align-items:center;gap:10px;font-size:12.5px;margin-top:7px}
+  .zbar{height:20px;border-radius:6px;background:#f0f3f8;overflow:hidden}
+  .zbar>div{height:100%;border-radius:6px}
+  .zname{font-weight:700}
+  .zamt{text-align:right;font-weight:800;font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
+  th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:right}
+  th:first-child,td:first-child{text-align:left}
+  th{font-size:11px;color:var(--sub);text-transform:uppercase}
+  td.num{font-variant-numeric:tabular-nums}
+  tr.hl{background:#fff9ec}
+  select{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:10px;font-size:13px;background:#f7f9fd;font-weight:600;color:var(--ink)}
+  .foot{text-align:center;color:var(--sub);font-size:11.5px;margin-top:16px}
+  .rowflex{display:flex;gap:12px;flex-wrap:wrap}
+  .rowflex>div{flex:1;min-width:150px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Jaysean · <span class="g">รายได้ของฉัน</span> 💰</h1>
+  <div class="sub">ใส่ยอดขายที่เก็บเงินได้เดือนนี้ → รู้เลยว่าจะรับเท่าไหร่ · เป้าเดือนละ 500,000</div>
+
+  <div class="card">
+    <label>ยอดเก็บเงินได้เดือนนี้ (บาท)</label>
+    <div class="inp"><input type="number" id="sales" value="500000" step="10000" min="0"></div>
+    <input type="range" id="salesR" min="0" max="2000000" step="10000" value="500000">
+    <div class="rowflex" style="margin-top:12px">
+      <div>
+        <label>ถ้าขายสินค้า (ดูจำนวนกล่อง)</label>
+        <select id="prod">
+          <option value="20000" selected>Lavuel Pium (20,000/กล่อง)</option>
+          <option value="7000">Lavuel 200mg (7,000)</option>
+          <option value="4200">Ensor Cell (4,200)</option>
+          <option value="3500">NIM Lipo Crystal (3,500)</option>
+          <option value="3800">NIM Scarlet B12 (3,800)</option>
+          <option value="2000">Anolve Exosome (2,000)</option>
+          <option value="900">La Pomme (900)</option>
+        </select>
+      </div>
+      <div>
+        <label>= ต้องขายประมาณ</label>
+        <div style="font-size:22px;font-weight:800;color:var(--gold);padding-top:4px" id="boxes">–</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card hero">
+    <div class="l">เดือนนี้คุณรับ (เงินเดือน + คอม + โบนัส)</div>
+    <div class="big" id="takehome">–</div>
+    <div class="pk" id="pack">–</div>
+    <div class="quota">
+      <div class="qbar"><div id="qfill" style="width:0%"></div><div class="qtxt" id="qtxt">–</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="kpis">
+      <div class="kpi"><div class="l">เงินเดือน</div><div class="n" id="k_sal" style="color:var(--blue)">–</div></div>
+      <div class="kpi"><div class="l">คอมมิชชั่น</div><div class="n" id="k_comm" style="color:var(--gold)">–</div></div>
+      <div class="kpi"><div class="l">โบนัสก้อน</div><div class="n" id="k_bonus" style="color:var(--pink)">–</div></div>
+      <div class="kpi"><div class="l">+Allowance</div><div class="n" id="k_allow" style="color:var(--sub)">–</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🎯 โบนัสก้อน — ปลดล็อกถึงไหนแล้ว</h2>
+    <div class="ms" id="mslist"></div>
+    <div class="next" id="nextms">–</div>
+  </div>
+
+  <div class="card">
+    <h2>คอมมาจากไหนบ้าง</h2>
+    <div id="zones"></div>
+    <div class="sub" style="margin-top:10px">กติกา: 3% ทุกบาทจนถึงเป้า · ทะลุเป้า (100–130%) 6% · ทะลุ 130% 8% — คิดเฉพาะส่วนในแต่ละช่วง</div>
+  </div>
+
+  <div class="card">
+    <h2>ขายเท่าไหร่ รับเท่าไหร่ (อ้างอิงเร็ว)</h2>
+    <table>
+      <thead><tr><th>ยอดเก็บ/เดือน</th><th>% เป้า</th><th>คอม</th><th>โบนัส</th><th>รับรวม</th></tr></thead>
+      <tbody id="reftbl"></tbody>
+    </table>
+    <div class="sub" style="margin-top:8px">* รับรวม = เงินเดือน + คอม + โบนัส (ยังไม่รวม Allowance ค่ารถ/น้ำมัน/ทางด่วน/ขนมหมอ ที่บริษัทออกให้อีก)</div>
+  </div>
+
+  <div class="foot">Jaysean Sales Income Tracker · ตัวเลขประมาณการเพื่อวางแผน · คอมจ่ายจากยอดเก็บเงินได้จริง</div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const fmt=n=>Math.round(n).toLocaleString('en-US');
+const money=n=>'฿'+fmt(n);
+const SAL=17500, ALLOW=15000, Q=500000;
+const RATES=[.03,.03,.06,.08], Z2=0.8, Z4=1.3;
+const MS=[[1.0,10000],[1.5,15000],[2.0,30000]];
+const BANDS=[['3% (ถึงเป้า)',0,1.0,'#5f83c4',.03],['6% ทะลุเป้า ⚡',1.0,1.3,'#e0972a',.06],['8% ทะลุ130% ⚡⚡',1.3,9,'#e05555',.08]];
+
+function comm(s){
+  // marginal: 0-80%,80-100% both 3% -> treat as one 3% band 0..Q; then 6%,8%
+  let c=0;
+  c+=Math.min(s,Q)*RATES[0];
+  c+=Math.max(0,Math.min(s,Z4*Q)-Q)*RATES[2];
+  c+=Math.max(0,s-Z4*Q)*RATES[3];
+  return c;
+}
+function bonus(s){ let b=0; MS.forEach(([t,a])=>{if(s>=t*Q)b+=a;}); return b; }
+
+function calc(){
+  const s=+$('sales').value||0;
+  $('salesR').value=Math.min(s,2000000);
+  const cm=comm(s), bn=bonus(s), take=SAL+cm+bn, pack=take+ALLOW;
+  $('takehome').textContent=money(take);
+  $('pack').textContent='+ Allowance '+money(ALLOW)+' = แพ็กรวม '+money(pack)+' /เดือน';
+  const pct=s/Q*100;
+  $('qfill').style.width=Math.min(100,pct)+'%';
+  $('qtxt').textContent=pct.toFixed(0)+'% ของเป้า'+(pct>=100?' 🎉':'');
+  $('k_sal').textContent=money(SAL);
+  $('k_comm').textContent=money(cm);
+  $('k_bonus').textContent=money(bn);
+  $('k_allow').textContent=money(ALLOW);
+  // boxes
+  const price=+$('prod').value;
+  $('boxes').textContent=fmt(Math.round(s/price))+' กล่อง';
+  // milestones
+  const ml=$('mslist'); ml.innerHTML='';
+  MS.forEach(([t,a],i)=>{
+    const target=t*Q, hit=s>=target;
+    const row=document.createElement('div'); row.className='msrow'+(hit?' hit':'');
+    row.innerHTML=`<div class="msdot">${hit?'✓':i+1}</div>
+      <div class="msinfo">แตะ <b>${money(target)}</b> (${t*100}% เป้า)</div>
+      <div class="msamt" style="color:${hit?'var(--green)':'var(--sub)'}">+${money(a)}</div>`;
+    ml.appendChild(row);
+  });
+  const next=MS.find(([t])=>s<t*Q);
+  if(next){ const need=next[0]*Q-s; $('nextms').innerHTML=`🔥 อีก <b>${money(need)}</b> ก็แตะ ${money(next[0]*Q)} รับโบนัสก้อนเพิ่ม <b>${money(next[1])}</b>!`; }
+  else { $('nextms').innerHTML='🏆 สุดยอด! ปลดล็อกโบนัสก้อนครบทุกหมุดแล้ว'; }
+  // zones
+  const zc=$('zones'); zc.innerHTML='';
+  const amts=BANDS.map(([n,lo,hi,col,r])=> s>lo*Q?Math.min(s,hi*Q)-lo*Q:0);
+  const mx=Math.max(...amts,1);
+  BANDS.forEach(([n,lo,hi,col,r],i)=>{
+    const amt=amts[i], c=amt*r;
+    const row=document.createElement('div'); row.className='zone';
+    row.innerHTML=`<span class="zname">${n}<br><span style="color:var(--sub);font-weight:500;font-size:11px">ยอด ${fmt(amt)}</span></span>
+      <div class="zbar"><div style="width:${amt/mx*100}%;background:${col}"></div></div><span class="zamt">${money(c)}</span>`;
+    zc.appendChild(row);
+  });
+  // ref table
+  const rt=$('reftbl'); rt.innerHTML='';
+  [300000,500000,700000,1000000,1500000,2000000].forEach(v=>{
+    const hl=Math.abs(v-s)<25000?' class="hl"':'';
+    rt.innerHTML+=`<tr${hl}><td class="num">${money(v)}</td><td class="num">${(v/Q*100).toFixed(0)}%</td><td class="num">${money(comm(v))}</td><td class="num">${bonus(v)>0?money(bonus(v)):'–'}</td><td class="num" style="font-weight:800;color:var(--green)">${money(SAL+comm(v)+bonus(v))}</td></tr>`;
+  });
+}
+$('sales').addEventListener('input',calc);
+$('salesR').addEventListener('input',()=>{$('sales').value=$('salesR').value;calc();});
+$('prod').addEventListener('change',calc);
+calc();
+</script>
+</body>
+</html>

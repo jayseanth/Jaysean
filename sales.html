@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<!-- saved from url=(0061)file:///Users/joey/Downloads/jaysean_model3_dashboard_12.html -->
+<html lang="th"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jaysean · Model 3 — Salary &amp; Comp Dashboard</title>
+<style>
+  :root{
+    --bg:#f4f6fb; --card:#ffffff; --ink:#1e2635; --sub:#6b7688; --line:#e6eaf2;
+    --gold:#c79a3e; --gold2:#e3c268; --blue:#2f6bd8; --green:#20a56a; --amber:#e0972a; --red:#e05555;
+    --z1:#8fa3bf; --z2:#5f83c4; --z3:#e0972a; --z4:#e05555;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Sarabun",sans-serif;line-height:1.55;padding:20px}
+  .wrap{max-width:1200px;margin:0 auto}
+  .head{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+  h1{font-size:23px;font-weight:800;letter-spacing:.2px}
+  h1 .g{color:var(--gold)}
+  .sub{color:var(--sub);font-size:13px}
+  .tag{background:#eef3fd;color:var(--blue);font-size:12px;font-weight:700;padding:5px 12px;border-radius:20px}
+  .grid{display:grid;grid-template-columns:360px 1fr;gap:16px}
+  @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 1px 3px rgba(20,30,60,.04)}
+  .card h2{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--sub);margin-bottom:14px;font-weight:700}
+  label{display:block;font-size:13px;color:var(--sub);margin:12px 0 5px;font-weight:600}
+  .big label{font-size:14px;color:var(--ink)}
+  input[type=range]{width:100%;accent-color:var(--gold);height:6px}
+  .big input[type=range]{accent-color:var(--blue);height:8px}
+  input[type=number]{width:100%;background:#fbfcfe;border:1px solid var(--line);color:var(--ink);border-radius:9px;padding:8px 10px;font-size:13px}
+  .val{float:right;color:var(--ink);font-weight:800;font-variant-numeric:tabular-nums}
+  .big .val{color:var(--blue);font-size:18px}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .hero{background:linear-gradient(135deg,#fbfcff,#eef3fd);border:1px solid #dbe6fb}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  @media(max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}}
+  .kpi{background:#fbfcfe;border:1px solid var(--line);border-radius:13px;padding:14px}
+  .kpi .l{font-size:11px;color:var(--sub);text-transform:uppercase;letter-spacing:.4px;font-weight:700}
+  .kpi .n{font-size:23px;font-weight:800;margin-top:5px;font-variant-numeric:tabular-nums}
+  .kpi .d{font-size:11px;color:var(--sub);margin-top:2px}
+  .mix{margin-top:8px}
+  .mixbar{height:34px;border-radius:10px;overflow:hidden;display:flex;border:1px solid var(--line)}
+  .mixbar .base{background:var(--blue);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:13px}
+  .mixbar .varp{background:var(--gold2);display:flex;align-items:center;justify-content:center;color:#5a4410;font-weight:800;font-size:13px}
+  .advice{margin-top:12px;border-radius:12px;padding:13px 15px;font-size:13.5px;font-weight:600;border:1px solid}
+  .a-green{background:#e9f8f1;border-color:#a9e3c9;color:#12764c}
+  .a-amber{background:#fdf3e2;border-color:#f2d69e;color:#9a6912}
+  .a-red{background:#fdeaea;border-color:#f4bcbc;color:#a83232}
+  .target{background:#eef3fd;border:1px dashed var(--blue);border-radius:11px;padding:11px 14px;font-size:13px;color:#25478f;margin-top:12px}
+  .target b{font-size:16px}
+  table{width:100%;border-collapse:collapse;margin-top:12px;font-size:13px}
+  th,td{text-align:right;padding:9px 11px;border-bottom:1px solid var(--line)}
+  th:first-child,td:first-child{text-align:left}
+  th{color:var(--sub);font-weight:700;font-size:11px;text-transform:uppercase}
+  td.num{font-variant-numeric:tabular-nums}
+  tr.hl{background:#fbfaf3}
+  .zones{display:flex;flex-direction:column;gap:7px;margin-top:6px}
+  .zone{display:grid;grid-template-columns:120px 1fr 78px;align-items:center;gap:10px;font-size:12.5px}
+  .zbar{height:22px;border-radius:6px;position:relative;background:#f0f3f8;overflow:hidden}
+  .zbar>div{height:100%;border-radius:6px}
+  .zname{font-weight:700;color:var(--ink)}
+  .zamt{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+  .note{font-size:11.5px;color:var(--sub);margin-top:12px;line-height:1.6}
+  .foot{text-align:center;color:var(--sub);font-size:12px;margin-top:18px}
+  .rates{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:5px}
+  .rates div{text-align:center}
+  .rates span{display:block;font-size:11px;color:var(--sub);margin-bottom:3px;font-weight:700}
+  .seg{display:flex;gap:8px;margin-top:10px}
+  .seg button{flex:1;background:#fbfcfe;border:1px solid var(--line);color:var(--ink);border-radius:9px;padding:9px 6px;font-size:11.5px;font-weight:700;cursor:pointer;transition:.15s}
+  .seg button:hover{background:#eef3fd;border-color:var(--blue);color:var(--blue)}
+  .msrow{display:grid;grid-template-columns:34px 62px 46px 1fr;gap:6px;align-items:center;margin-top:7px;font-size:12px;color:var(--sub);font-weight:600}
+  .msrow input{padding:6px 8px}
+  .seg button.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+  select{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:9px;font-size:13px;background:#fbfcfe;color:var(--ink);font-weight:600}
+  .pbar{position:relative;height:36px;border-radius:9px;overflow:hidden;display:flex;border:1px solid var(--line);background:#f0f3f8}
+  .pbar>div.pseg{display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden}
+  .pbar .beline{position:absolute;top:0;bottom:0;width:0;border-left:2px dashed #12324f;z-index:6}
+  .pbar .beflag{position:absolute;top:-1px;transform:translateX(-50%);background:#12324f;color:#fff;font-size:9.5px;font-weight:800;padding:1px 5px;border-radius:0 0 5px 5px;z-index:7;white-space:nowrap}
+  .pseg-cogs{background:#94a3b8}.pseg-sal{background:#2f6bd8}.pseg-allow{background:#7aa5e6}.pseg-comm{background:#e3a44a}.pseg-ms{background:#d98fb0}.pseg-profit{background:#20a56a}.pseg-loss{background:#e05555}
+  .plegend{display:flex;flex-wrap:wrap;gap:12px;margin-top:9px;font-size:11px;color:var(--sub)}
+  .plegend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:middle}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <div>
+      <h1>Jaysean · <span class="g">Model 3</span> — Salary &amp; Comp Dashboard</h1>
+      <div class="sub">Quota + Accelerator (มาตรฐานบริษัทใหญ่) · เลื่อน “เงินเดือน” ดูว่าควรตั้งเท่าไหร่ให้ balance</div>
+    </div>
+    <div class="tag">จ่ายจากยอดเก็บจริง · margin 68%</div>
+  </div>
+
+  <div class="grid">
+    <!-- CONTROLS -->
+    <div>
+      <div class="card hero big">
+        <h2>⭐ ตัวปรับหลัก — เงินเดือน</h2>
+        <label>เงินเดือนต่อเดือน <span class="val" id="v_sal">17,500</span></label>
+        <input type="range" id="sal" min="12000" max="30000" step="500" value="17500">
+        <div class="mix">
+          <label style="margin-top:6px">สัดส่วนรายได้ (Pay-mix) ที่ยอดเป้า</label>
+          <div class="mixbar"><div class="base" id="mixbase" style="width: 53.8462%;">Base 54%</div><div class="varp" id="mixvar" style="width: 46.1538%;">Var 46%</div></div>
+        </div>
+        <div class="advice a-amber" id="advice">🟡 <b>ค่อนข้างดุ (สาย hunter)</b> — base 54% ดีถ้าทำเลลูกค้าเยอะ แต่เซลใหม่อาจกดดัน</div>
+        <div class="target" id="target">🎯 ที่ quota นี้ เงินเดือนที่ทำให้ balance:<br>60/40 → <b>฿22,500</b> · 55/45 → <b>฿18,333</b> /เดือน</div>
+      </div>
+
+      <div class="card" style="margin-top:14px">
+        <h2>🧴 เลือกสินค้า — margin ปรับอัตโนมัติ</h2>
+        <select id="prod">
+          <option value="lavuel_pium" selected="">Lavuel Pium (฿20,000)</option>
+          <option value="lavuel_200">Lavuel 200mg (฿7,000)</option>
+          <option value="ensor">Ensor Cell (฿4,200)</option>
+          <option value="nim_lipo">NIM Lipo Crystal (฿3,500)</option>
+          <option value="nim_scarlet">NIM Scarlet B12 (฿3,800)</option>
+          <option value="anolve">Anolve Exosome (฿2,000) ⚠</option>
+          <option value="la_pomme">La Pomme (฿900) ⚠</option>
+          <option value="blend">ผสมหลายตัว (Blended 68%)</option>
+        </select>
+        <label style="margin-top:10px">Tier ที่ขายบ่อย (กำหนด margin/แถม)</label>
+        <div class="seg" id="tierSeg">
+          <button data-t="0" class="">Starter</button>
+          <button data-t="1" class="">Gold</button>
+          <button data-t="2" class="on">Platinum</button>
+          <button data-t="3" class="">JS Ptn</button>
+        </div>
+        <div class="target" id="prodinfo" style="margin-top:10px"><b>Lavuel Pium</b> · Platinum — จ่าย <b>100</b> แถม <b>25</b> → ราคาเฉลี่ย <b>฿16,000</b>/กล่อง<br>ต้นทุน ฿4,500 · ราคาตั้ง ฿20,000 · margin จริง <b>71.9%</b></div>
+      </div>
+
+      <div class="card" style="margin-top:14px">
+        <h2>ตั้งค่าอื่น</h2>
+        <label>Quota (เป้า) ต่อเดือน <span class="val" id="v_q">500,000</span></label>
+        <input type="range" id="q" min="300000" max="800000" step="50000" value="500000">
+        <label>Gross margin <span class="val" id="v_mar">71.9%</span></label>
+        <input type="range" id="mar" min="20" max="80" step="0.1" value="68">
+        <div class="note" style="margin-top:4px">Allowance (cover ต้นทุนงาน — แก้ได้)</div>
+        <div class="row2" style="margin-top:6px">
+          <div><label style="margin:2px 0">ค่าเสื่อมรถ</label><input type="number" id="car" value="5000"></div>
+          <div><label style="margin:2px 0">ทางด่วน</label><input type="number" id="toll" value="2000"></div>
+        </div>
+        <div class="row2" style="margin-top:6px">
+          <div><label style="margin:2px 0">ค่าขนมหมอ</label><input type="number" id="doc" value="3000"></div>
+          <div><label style="margin:2px 0">น้ำมัน</label><input type="number" id="fuel" value="5000"></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:14px">
+        <h2>จำลองผลงานเซล</h2>
+        <label>ยอดเก็บได้จริง /เดือน <span class="val" id="v_sales">925,000</span></label>
+        <input type="range" id="sales" min="0" max="2000000" step="25000" value="1000000">
+        <div class="target" style="margin-top:12px">
+          <b>โมเดลคอม: Quota Accelerator</b><br>
+          • <b>3%</b> ทุกบาท จนถึงเป้า (100%)<br>
+          • ทะลุเป้า 100–130% → <b>6%</b> ⚡<br>
+          • ทะลุ 130%+ → <b>8%</b> ⚡⚡<br>
+          <span style="color:var(--sub)">คิดแบบซอยช่วง (marginal) ไม่มี cliff</span>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:14px">
+        <h2>🎯 โบนัสก้อน (Milestone) — สะสมได้</h2>
+        <div class="msrow"><span>แตะ</span><input type="number" id="mp0" value="100"><span>% ฿</span><input type="number" id="mb0" value="10000"></div>
+        <div class="msrow"><span>แตะ</span><input type="number" id="mp1" value="150"><span>% ฿</span><input type="number" id="mb1" value="15000"></div>
+        <div class="msrow"><span>แตะ</span><input type="number" id="mp2" value="200"><span>% ฿</span><input type="number" id="mb2" value="30000"></div>
+        <div class="seg">
+          <button id="ms_off">ปิดก้อน<br>(แบบ B/เร่ง)</button>
+          <button id="ms_hybrid">Hybrid<br>10/15/30k</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- OUTPUT -->
+    <div>
+      <div class="card">
+        <h2>ภาพรวมต่อผู้แทน 1 คน /เดือน</h2>
+        <div class="kpis">
+          <div class="kpi"><div class="l">แพ็กฟิกซ์ /เดือน</div><div class="n" id="o_fix">฿32,500</div><div class="d">เงินเดือน + allowance</div></div>
+          <div class="kpi"><div class="l">Break-even ยอดขาย</div><div class="n" id="o_be">฿47,500</div><div class="d">ต่ำกว่านี้บริษัทขาดทุน/หัว</div></div>
+          <div class="kpi"><div class="l">คอม @ยอดจำลอง</div><div class="n" id="o_comm" style="color:var(--gold)">฿46,000</div><div class="d" id="o_att">185% ของเป้า</div></div>
+          <div class="kpi"><div class="l">บริษัทเหลือ @ยอดจำลอง</div><div class="n" id="o_conet" style="color: var(--green);">฿561,575 <span style="font-size:13px">(61%)</span></div><div class="d">กำไรขั้นต้น − ต้นทุนเซล</div></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:14px">
+        <h2>คอมแตกตามโซน @ ยอดจำลอง</h2>
+        <div class="zones" id="zones"><div class="zone"><span class="zname">0–100% เป้า<br><span style="color:var(--sub);font-weight:500;font-size:11px">3% · ยอด 500,000</span></span>
+      <div class="zbar"><div style="width:100%;background:var(--z1)"></div></div>
+      <span class="zamt">฿15,000</span></div><div class="zone"><span class="zname">100–130% เป้า ⚡<br><span style="color:var(--sub);font-weight:500;font-size:11px">6% · ยอด 150,000</span></span>
+      <div class="zbar"><div style="width:30%;background:var(--z3)"></div></div>
+      <span class="zamt">฿9,000</span></div><div class="zone"><span class="zname">130–∞% เป้า ⚡⚡<br><span style="color:var(--sub);font-weight:500;font-size:11px">8% · ยอด 275,000</span></span>
+      <div class="zbar"><div style="width:55.00000000000001%;background:var(--z4)"></div></div>
+      <span class="zamt">฿22,000</span></div></div>
+        <div class="advice a-green" id="zsum" style="margin-top:14px">คอม <b>฿46,000</b> + เงินเดือน ฿17,500 + ก้อน <b>฿25,000</b> = <b>รับ ฿88,500/เดือน</b> @ 185% เป้า<br><span style="font-weight:500;font-size:12px">+ allowance ฿15,000 → แพ็กรวมที่เซลได้รับ <b>฿103,500</b>/เดือน</span></div>
+
+        <div style="margin-top:16px">
+          <div style="font-size:12px;color:var(--sub);font-weight:700;margin-bottom:7px">📊 P&amp;L ต่อเดือน @ ยอดจำลอง — แถบ = 100% ของยอดขาย (เส้นประ = จุดคุ้มทุน)</div>
+          <div class="pbar" id="pbar"><div class="pseg pseg-cogs" title="ต้นทุนสินค้า ฿259,925" style="width: 28.1%;">ต้นทุนสินค้า</div><div class="pseg pseg-sal" title="เงินเดือน ฿17,500" style="width: 1.89189%;"></div><div class="pseg pseg-allow" title="Allowance ฿15,000" style="width: 1.62162%;"></div><div class="pseg pseg-comm" title="คอม ฿46,000" style="width: 4.97297%;"></div><div class="pseg pseg-ms" title="ก้อน ฿25,000" style="width: 2.7027%;"></div><div class="pseg pseg-profit" title="กำไรบริษัท ฿561,575" style="width: 60.7108%;">กำไรบริษัท</div><div class="beline" style="left: 5.13514%;"></div><div class="beflag" style="left: 5.13514%;">BE</div></div>
+          <div class="plegend" id="plegend"><span><i class="pseg-cogs"></i>ต้นทุนสินค้า ฿259,925</span><span><i class="pseg-sal"></i>เงินเดือน ฿17,500</span><span><i class="pseg-allow"></i>Allowance ฿15,000</span><span><i class="pseg-comm"></i>คอม ฿46,000</span><span><i class="pseg-ms"></i>ก้อน ฿25,000</span><span><i class="pseg-profit"></i>กำไรบริษัท ฿561,575 (61%)</span></div>
+          <div id="beline" class="target" style="margin-top:10px">📍 จุดคุ้มทุน (BE) = <b>฿47,500</b>/เดือน · ตอนนี้ขาย ฿925,000 → <b style="color:var(--green)">เกิน BE ฿877,500</b> · กำไรบริษัท <b>฿561,575 (61%)</b></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:14px">
+        <h2>เดินเรื่อง — เซลได้ vs บริษัทเหลือ</h2>
+        <table>
+          <thead><tr><th>ยอดเก็บ/เดือน</th><th>กล่อง</th><th>% เป้า</th><th>คอม</th><th>bonus</th><th>รับรวม</th><th>บริษัทเหลือ</th></tr></thead>
+          <tbody id="jtable"><tr><td class="num">฿300,000</td><td class="num">15</td><td class="num">60%</td><td class="num">฿9,000</td><td class="num">–</td><td class="num" style="font-weight:700">฿26,500</td><td class="num" style="color:var(--green);font-weight:700">฿174,200 <span style="font-weight:500;font-size:11px">(58%)</span></td></tr><tr><td class="num">฿400,000</td><td class="num">20</td><td class="num">80%</td><td class="num">฿12,000</td><td class="num">–</td><td class="num" style="font-weight:700">฿29,500</td><td class="num" style="color:var(--green);font-weight:700">฿243,100 <span style="font-weight:500;font-size:11px">(61%)</span></td></tr><tr><td class="num">฿500,000</td><td class="num">25</td><td class="num">100%</td><td class="num">฿15,000</td><td class="num">฿10,000</td><td class="num" style="font-weight:700">฿42,500</td><td class="num" style="color:var(--green);font-weight:700">฿302,000 <span style="font-weight:500;font-size:11px">(60%)</span></td></tr><tr><td class="num">฿700,000</td><td class="num">35</td><td class="num">140%</td><td class="num">฿28,000</td><td class="num">฿10,000</td><td class="num" style="font-weight:700">฿55,500</td><td class="num" style="color:var(--green);font-weight:700">฿432,800 <span style="font-weight:500;font-size:11px">(62%)</span></td></tr><tr><td class="num">฿1,000,000</td><td class="num">50</td><td class="num">200%</td><td class="num">฿52,000</td><td class="num">฿55,000</td><td class="num" style="font-weight:700">฿124,500</td><td class="num" style="color:var(--green);font-weight:700">฿579,500 <span style="font-weight:500;font-size:11px">(58%)</span></td></tr><tr><td class="num">฿1,500,000</td><td class="num">75</td><td class="num">300%</td><td class="num">฿92,000</td><td class="num">฿55,000</td><td class="num" style="font-weight:700">฿164,500</td><td class="num" style="color:var(--green);font-weight:700">฿899,000 <span style="font-weight:500;font-size:11px">(60%)</span></td></tr></tbody>
+        </table>
+        <div class="note">บริษัทเหลือ = กำไรขั้นต้น (ยอด × margin) − ต้นทุนเซลทั้งหมด (แพ็กฟิกซ์ + คอม) · แถวไฮไลต์ = ยอดจำลองปัจจุบัน</div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">DOTA · Jaysean Thailand — โมเดลจำลองเพื่อการตัดสินใจ ไม่ใช่ตัวเลขบัญชีจริง</div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const fmt=n=>Math.round(n).toLocaleString('en-US');
+const money=n=>(n<0?'-':'')+'฿'+fmt(Math.abs(n));
+const TIERS=['Starter','Gold','Platinum','JS Partner'];
+// tiers = [จ่าย, แถม] ต่อ 1 ดีล → ใช้คำนวณราคาเฉลี่ย/กล่อง และ margin จริง
+const PRODUCTS={
+  lavuel_pium:{name:'Lavuel Pium',cogs:4500,list:20000,tiers:[[1,0],[50,6],[100,25],[500,167]]},
+  lavuel_200:{name:'Lavuel 200mg',cogs:1500,list:7000,tiers:[[1,0],[50,4],[100,25],[500,278]]},
+  ensor:{name:'Ensor Cell',cogs:1200,list:4200,tiers:[[1,0],[50,5],[100,24],[500,200]]},
+  nim_lipo:{name:'NIM Lipo Crystal',cogs:900,list:3500,tiers:[[1,0],[50,4],[100,16],[500,125]]},
+  nim_scarlet:{name:'NIM Scarlet B12',cogs:1000,list:3800,tiers:[[1,0],[50,4],[100,16],[500,133]]},
+  anolve:{name:'Anolve Exosome',cogs:1000,list:2000,tiers:[[1,0],[50,7],[100,31],[500,269]]},
+  la_pomme:{name:'La Pomme',cogs:360,list:900,tiers:[[1,0],[50,6],[100,29],[500,250]]},
+  blend:{name:'ผสมหลายตัว',cogs:null,list:null,tiers:null}
+};
+const curTier=()=>+document.querySelector('#tierSeg button.on').dataset.t;
+const curProd=()=>PRODUCTS[$('prod').value];
+const BANDMETA=[['โซน1 ปูพื้น',0,.80,'var(--z1)'],['โซน2 ใกล้เป้า',.80,1,'var(--z2)'],['โซน3 เกินเป้า ⚡',1,1.30,'var(--z3)'],['โซน4 ซุปตาร์ ⚡⚡',1.30,9,'var(--z4)']];
+const getRates=()=>[.03,.03,.06,.08]; // โมเดลเดียว: Quota Accelerator (แบบ B)
+
+function comm(s,Q){
+  const R=getRates(); let c=0;
+  BANDMETA.forEach(([,lo,hi],i)=>{ if(s>lo*Q) c+=(Math.min(s,hi*Q)-lo*Q)*R[i]; });
+  return c;
+}
+function commAtQuota(Q){ const R=getRates(); return 0.8*Q*R[0] + 0.2*Q*R[1]; } // 100% attainment
+function milestone(s,Q){
+  const rungs=[[+$('mp0').value,+$('mb0').value],[+$('mp1').value,+$('mb1').value],[+$('mp2').value,+$('mb2').value]];
+  let b=0;
+  rungs.forEach(([p,amt])=>{ if(p>0 && amt>0 && s>=p/100*Q) b+=amt; });
+  return b;
+}
+
+function calc(){
+  const sal=+$('sal').value, Q=+$('q').value, margin=+$('mar').value/100;
+  const allow=+$('car').value+ +$('toll').value+ +$('doc').value+ +$('fuel').value;
+  const sales=+$('sales').value;
+  $('v_sal').textContent=fmt(sal); $('v_q').textContent=fmt(Q);
+  $('v_mar').textContent=$('mar').value+'%'; $('v_sales').textContent=fmt(sales);
+
+  // pay-mix at quota
+  const cq=commAtQuota(Q), ote=sal+cq;
+  const basePct=sal/ote*100, varPct=100-basePct;
+  $('mixbase').style.width=basePct+'%'; $('mixbase').textContent='Base '+basePct.toFixed(0)+'%';
+  $('mixvar').style.width=varPct+'%'; $('mixvar').textContent='Var '+varPct.toFixed(0)+'%';
+
+  // advice on pay-mix
+  const a=$('advice');
+  if(basePct>=55 && basePct<=62){ a.className='advice a-green'; a.innerHTML='🟢 <b>Balance กำลังดี</b> — base '+basePct.toFixed(0)+'% ตรงมาตรฐาน medical device (55–62%) เซลมั่นคงพอ + มีแรงวิ่ง'; }
+  else if(basePct>62 && basePct<=70){ a.className='advice a-amber'; a.innerHTML='🟡 <b>เงินเดือนออกจะสูง</b> — base '+basePct.toFixed(0)+'% variable เริ่มน้อย แรงจูงใจล่ายอดอ่อนลง'; }
+  else if(basePct>70){ a.className='advice a-red'; a.innerHTML='🔴 <b>เงินเดือนสูงไป</b> — base '+basePct.toFixed(0)+'% เซลสบายเกิน ไม่กระตือรือร้นล่ายอด (เสี่ยงเกาะฟิกซ์)'; }
+  else if(basePct>=48 && basePct<55){ a.className='advice a-amber'; a.innerHTML='🟡 <b>ค่อนข้างดุ (สาย hunter)</b> — base '+basePct.toFixed(0)+'% ดีถ้าทำเลลูกค้าเยอะ แต่เซลใหม่อาจกดดัน'; }
+  else{ a.className='advice a-red'; a.innerHTML='🔴 <b>เงินเดือนต่ำไป</b> — base '+basePct.toFixed(0)+'% เสี่ยงมาก จ้างคนดียาก คนเก่งไม่กล้ามา'; }
+
+  // target salary for 60/40 and 55/45
+  const s60=1.5*cq, s55=cq*55/45;
+  $('target').innerHTML='🎯 ที่ quota นี้ เงินเดือนที่ทำให้ balance:<br>60/40 → <b>'+money(s60)+'</b> · 55/45 → <b>'+money(s55)+'</b> /เดือน';
+
+  // KPIs
+  const fix=sal+allow;
+  $('o_fix').textContent=money(fix);
+  // breakeven: gp = fix + comm(sales) -> scan
+  let be=null;
+  for(let x=0;x<=3000000;x+=500){ if(x*margin-(fix+comm(x,Q))>=0){ be=x; break; } }
+  $('o_be').textContent = be!==null?money(be):'—';
+  const cSim=comm(sales,Q);
+  $('o_comm').textContent=money(cSim);
+  $('o_att').textContent=(sales/Q*100).toFixed(0)+'% ของเป้า';
+
+  // zone breakdown
+  const zc=$('zones'); zc.innerHTML='';
+  const R=getRates();
+  // รวมโซนที่เรตเท่ากัน (แสดงผลอย่างเดียว — ตัวเลขไม่เปลี่ยน)
+  const groups=[];
+  BANDMETA.forEach(([name,lo,hi,col],i)=>{
+    const r=R[i];
+    const amt = sales>lo*Q ? Math.min(sales,hi*Q)-lo*Q : 0;
+    const last=groups[groups.length-1];
+    if(last && last.r===r){ last.hi=hi; last.amt+=amt; }
+    else groups.push({r,lo,hi,col,amt});
+  });
+  const maxBand=Math.max(...groups.map(g=>g.amt),1);
+  let total=0;
+  groups.forEach(g=>{
+    const cm=g.amt*g.r; total+=cm;
+    const w=g.amt/maxBand*100;
+    const hiTxt = g.hi>=9 ? '∞' : Math.round(g.hi*100);
+    const acc = g.lo>=1.3?' ⚡⚡':g.lo>=1?' ⚡':'';
+    const label = `${Math.round(g.lo*100)}–${hiTxt}% เป้า${acc}`;
+    const row=document.createElement('div'); row.className='zone';
+    row.innerHTML=`<span class="zname">${label}<br><span style="color:var(--sub);font-weight:500;font-size:11px">${(g.r*100)}% · ยอด ${fmt(g.amt)}</span></span>
+      <div class="zbar"><div style="width:${w}%;background:${g.col}"></div></div>
+      <span class="zamt">${money(cm)}</span>`;
+    zc.appendChild(row);
+  });
+  const msSim=milestone(sales,Q);
+  $('zsum').innerHTML=`คอม <b>${money(total)}</b> + เงินเดือน ${money(sal)} + ก้อน <b>${money(msSim)}</b> = <b>รับ ${money(sal+total+msSim)}/เดือน</b> @ ${(sales/Q*100).toFixed(0)}% เป้า<br><span style="font-weight:500;font-size:12px">+ allowance ${money(allow)} → แพ็กรวมที่เซลได้รับ <b>${money(sal+total+msSim+allow)}</b>/เดือน</span>`;
+
+  // ===== P&L bar + breakeven =====
+  const gpSim=sales*margin, cogsSim=sales-gpSim, repComm=total, profit=gpSim-(fix+repComm+msSim);
+  const denom = profit>=0 ? sales : (cogsSim+fix+repComm+msSim);
+  const netPct = sales>0 ? (profit/sales*100).toFixed(0)+'%' : '–';
+  $('o_conet').innerHTML = money(profit) + (sales>0?` <span style="font-size:13px">(${netPct})</span>`:''); $('o_conet').style.color = profit>=0?'var(--green)':'var(--red)';
+  const segs=[
+    ['pseg-cogs','ต้นทุนสินค้า',cogsSim],
+    ['pseg-sal','เงินเดือน',sal],
+    ['pseg-allow','Allowance',allow],
+    ['pseg-comm','คอม',repComm],
+    ['pseg-ms','ก้อน',msSim],
+    profit>=0?['pseg-profit','กำไรบริษัท',profit]:['pseg-loss','ขาดทุน',Math.abs(profit)]
+  ];
+  const pbar=$('pbar'); pbar.innerHTML='';
+  segs.forEach(([cls,lab,val])=>{
+    if(val<=0)return;
+    const w=denom>0?val/denom*100:0;
+    const d=document.createElement('div'); d.className='pseg '+cls; d.style.width=w+'%';
+    d.textContent=w>9?lab:''; d.title=lab+' '+money(val);
+    pbar.appendChild(d);
+  });
+  if(be!==null && denom>0){
+    const bx=Math.max(0,Math.min(100, be/denom*100));
+    const ln=document.createElement('div'); ln.className='beline'; ln.style.left=bx+'%'; pbar.appendChild(ln);
+    const fl=document.createElement('div'); fl.className='beflag'; fl.style.left=bx+'%'; fl.textContent='BE'; pbar.appendChild(fl);
+  }
+  $('plegend').innerHTML=segs.filter(s=>s[2]>0).map(([cls,lab,val])=>{
+    const pp = (cls==='pseg-profit'||cls==='pseg-loss') && sales>0 ? ` (${(val/sales*100).toFixed(0)}%)` : '';
+    return `<span><i class="${cls}"></i>${lab} ${money(val)}${pp}</span>`;
+  }).join('');
+  const beL=$('beline');
+  if(be===null){ beL.innerHTML='📍 ที่ margin นี้ยังไม่ถึงจุดคุ้มทุน'; }
+  else if(sales>=be){ beL.innerHTML=`📍 จุดคุ้มทุน (BE) = <b>${money(be)}</b>/เดือน · ตอนนี้ขาย ${money(sales)} → <b style="color:var(--green)">เกิน BE ${money(sales-be)}</b> · กำไรบริษัท <b>${money(profit)} (${netPct})</b>`; }
+  else { beL.innerHTML=`📍 จุดคุ้มทุน (BE) = <b>${money(be)}</b>/เดือน · ตอนนี้ขาย ${money(sales)} → <b style="color:var(--red)">ต่ำกว่า BE ${money(be-sales)}</b> · ขาดทุน <b>${money(-profit)} (${netPct})</b>`; }
+
+  // journey table
+  const pts=[Math.round(Q*0.6),Math.round(Q*0.8),Q,Math.round(Q*1.4),Math.round(Q*2),Math.round(Q*3)];
+  const jt=$('jtable'); jt.innerHTML='';
+  const plist=curProd().list;
+  pts.forEach(s=>{
+    const cm=comm(s,Q), ms=milestone(s,Q), net=s*margin-(fix+cm+ms), att=s/Q*100;
+    const hl = Math.abs(s-sales) < Q*0.05 ? ' class="hl"':'';
+    const box = plist ? fmt(Math.round(s/plist)) : '–';
+    jt.innerHTML+=`<tr${hl}><td class="num">${money(s)}</td><td class="num">${box}</td><td class="num">${att.toFixed(0)}%</td><td class="num">${money(cm)}</td><td class="num">${ms>0?money(ms):'–'}</td><td class="num" style="font-weight:700">${money(sal+cm+ms)}</td><td class="num" style="color:${net>=0?'var(--green)':'var(--red)'};font-weight:700">${money(net)} <span style="font-weight:500;font-size:11px">(${s>0?(net/s*100).toFixed(0):0}%)</span></td></tr>`;
+  });
+}
+$('ms_off').onclick=()=>{$('mb0').value=0;$('mb1').value=0;$('mb2').value=0;calc();};
+$('ms_hybrid').onclick=()=>{$('mp0').value=100;$('mb0').value=10000;$('mp1').value=150;$('mb1').value=15000;$('mp2').value=200;$('mb2').value=30000;calc();};
+function applyProduct(){
+  const p=curProd(), ti=curTier();
+  if(p.tiers){
+    const [paid,free]=p.tiers[ti];
+    const units=paid+free;
+    const eff=paid*p.list/units;              // ราคาเฉลี่ย/กล่อง (รวมแถม)
+    const m=(1-units*p.cogs/(paid*p.list))*100; // margin จริงหลังแถม
+    $('mar').value=m.toFixed(1);
+    $('prodinfo').innerHTML=`<b>${p.name}</b> · ${TIERS[ti]} — จ่าย <b>${paid}</b> แถม <b>${free}</b> → ราคาเฉลี่ย <b>฿${fmt(eff)}</b>/กล่อง<br>ต้นทุน ฿${fmt(p.cogs)} · ราคาตั้ง ฿${fmt(p.list)} · margin จริง <b>${m.toFixed(1)}%</b>`;
+  }else{
+    $('mar').value=68;
+    $('prodinfo').innerHTML=`<b>ผสมหลายตัว</b> · margin เฉลี่ย <b>68%</b> — ปรับ slider เองได้`;
+  }
+  calc();
+}
+$('prod').addEventListener('change',applyProduct);
+document.querySelectorAll('#tierSeg button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('#tierSeg button').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on'); applyProduct();
+});
+document.querySelectorAll('input').forEach(el=>el.addEventListener('input',calc));
+applyProduct();
+</script>
+
+
+</body></html>
