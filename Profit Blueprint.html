@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jaysean</title>
+<style>
+  :root{
+    --navy:#073868; --navy2:#0d4a80; --ink:#1a2432; --sub:#7b8493;
+    --gold:#a8842f; --gold2:#c9a961; --goldl:#e2cfa0;
+    --ivory:#fbf7ef; --ivory2:#f5efe2; --line:#e6dfd0;
+    --green:#0f7a4d; --rose:#a8365f;
+    --serif:"Didot","Bodoni MT","Playfair Display",Georgia,"Times New Roman",serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","Sarabun",sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#e8e3d8;color:var(--ink);line-height:1.55;font-family:var(--sans);
+       font-variant-numeric:tabular-nums;padding:22px 14px 46px}
+  .printonly{display:none}
+
+  /* ===== หน้ากระดาษ ===== */
+  .sheet{max-width:1040px;margin:0 auto;background:var(--ivory);position:relative;
+         padding:30px 34px 34px;border-radius:3px;
+         box-shadow:0 18px 50px rgba(20,30,50,.16);
+         background-image:
+           url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34'%3E%3Cpath d='M17 1L33 17L17 33L1 17Z' fill='none' stroke='%23a8842f' stroke-width='.55' opacity='.13'/%3E%3Ccircle cx='17' cy='17' r='1.1' fill='%23a8842f' opacity='.1'/%3E%3C/svg%3E");
+         background-size:34px 34px}
+  /* กรอบทองคู่ */
+  .sheet::before{content:'';position:absolute;inset:11px;border:1px solid rgba(168,132,47,.42);pointer-events:none}
+  .sheet::after{content:'';position:absolute;inset:15px;border:1px solid rgba(168,132,47,.18);pointer-events:none}
+  .inner{position:relative;z-index:1}
+  @media(max-width:560px){.sheet{padding:22px 18px 26px}}
+
+  /* ===== หัวกระดาษ ===== */
+  .lhtop{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+  .logo{height:32px;width:auto;display:block}
+  .eyebrow{font-family:var(--serif);font-size:12px;font-weight:600;letter-spacing:4.5px;
+           color:var(--gold);text-transform:uppercase;white-space:nowrap}
+  .drule{margin:15px 0 14px;height:4px;position:relative}
+  .drule::before,.drule::after{content:'';position:absolute;left:0;right:0;background:rgba(168,132,47,.55)}
+  .drule::before{top:0;height:1.4px}
+  .drule::after{top:3px;height:.6px;background:rgba(168,132,47,.32)}
+  .lhttl{font-size:27px;font-weight:700;color:var(--navy);line-height:1.28;letter-spacing:-.2px}
+  @media(max-width:560px){.lhttl{font-size:21px}}
+  .lhsub{font-size:12.5px;color:var(--sub);margin-top:6px;max-width:660px;line-height:1.65}
+
+  /* ===== ข้อมูลเอกสาร ===== */
+  .dgrid{display:grid;grid-template-columns:1fr 1fr 156px;gap:13px;margin-top:18px}
+  @media(max-width:640px){.dgrid{grid-template-columns:1fr}}
+  .fl{font-family:var(--serif);font-size:10px;color:var(--gold);font-weight:600;
+      text-transform:uppercase;letter-spacing:2px;margin-bottom:5px}
+  .dgrid input{width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:2px;
+    font-size:14px;font-weight:600;color:var(--navy);background:rgba(255,255,255,.72);font-family:var(--sans)}
+  .dgrid input:focus{outline:none;border-color:var(--gold);background:#fff}
+  .dgrid input::placeholder{color:#b3ab99;font-weight:400}
+
+  /* ===== เลย์เอาต์ ===== */
+  .grid{display:grid;grid-template-columns:300px 1fr;gap:20px;margin-top:20px;align-items:start}
+  @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  .blk{margin-top:20px}
+  .blk:first-child{margin-top:0}
+  h2{display:flex;align-items:center;gap:9px;font-family:var(--serif);font-size:15px;font-weight:600;
+     color:var(--navy);margin-bottom:11px;letter-spacing:.3px}
+  h2::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(168,132,47,.42),rgba(168,132,47,0))}
+  h2 .n{font-size:10px;font-weight:600;color:var(--gold);letter-spacing:1.6px}
+
+  .panel{background:rgba(255,255,255,.66);border:1px solid var(--line);padding:16px 17px}
+  label{display:block;font-size:12px;color:var(--sub);font-weight:700;margin:13px 0 5px}
+  .panel label:first-of-type{margin-top:0}
+  select,.panel input[type=number]{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:2px;
+    font-size:13.5px;background:#fff;color:var(--ink);font-family:var(--sans);font-weight:600}
+  select:focus,input:focus{outline:none;border-color:var(--gold)}
+  .hint{font-size:11px;color:var(--sub);margin-top:5px;line-height:1.6}
+
+  .tierseg{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:5px}
+  .tierseg button{background:#fff;border:1px solid var(--line);border-radius:2px;padding:8px 3px;
+    font-size:10.5px;font-weight:700;color:var(--sub);cursor:pointer;font-family:var(--sans);line-height:1.3;transition:.15s}
+  .tierseg button span{display:block;font-size:9px;font-weight:500;opacity:.75}
+  .tierseg button.on{background:var(--navy);border-color:var(--navy);color:#fff}
+  .tierseg button.on span{opacity:.8}
+  .tierseg button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+  /* ===== HERO ===== */
+  .hero{background:linear-gradient(150deg,#062f57,#0e4879 55%,#0a3a66);color:#fff;padding:24px 26px;
+        position:relative;overflow:hidden;border:1px solid rgba(168,132,47,.5)}
+  .hero::before{content:'';position:absolute;inset:0;opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34'%3E%3Cpath d='M17 1L33 17L17 33L1 17Z' fill='none' stroke='%23c9a961' stroke-width='.55' opacity='.28'/%3E%3C/svg%3E");
+    background-size:34px 34px}
+  .hero>*{position:relative}
+  .hl{font-family:var(--serif);font-size:11px;font-weight:600;letter-spacing:3px;
+      text-transform:uppercase;color:var(--gold2)}
+  .hbig{font-size:56px;font-weight:800;line-height:1.02;margin:9px 0 3px;letter-spacing:-1.8px;color:#fff}
+  @media(max-width:560px){.hbig{font-size:42px}}
+  .hpct{font-size:13.5px;font-weight:500;color:rgba(255,255,255,.8)}
+  .hsplit{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px;
+          padding-top:17px;border-top:1px solid rgba(201,169,97,.4)}
+  @media(max-width:560px){.hsplit{grid-template-columns:1fr 1fr}}
+  .hs .l{font-size:10px;color:rgba(201,169,97,.9);font-weight:600;letter-spacing:1.2px;text-transform:uppercase}
+  .hs .n{font-size:19px;font-weight:700;margin-top:3px}
+
+  /* ===== KPI ===== */
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:780px){.kpis{grid-template-columns:repeat(2,1fr)}}
+  .kpi{background:rgba(255,255,255,.72);border:1px solid var(--line);padding:13px;
+       border-top:2px solid var(--gold2)}
+  .kpi .l{font-size:9.5px;color:var(--sub);font-weight:700;text-transform:uppercase;letter-spacing:.9px}
+  .kpi .n{font-size:20px;font-weight:800;margin-top:5px;color:var(--navy)}
+  .kpi .d{font-size:10.5px;color:var(--sub);margin-top:3px}
+
+  .pb{height:34px;background:#e9e2d4;overflow:hidden;display:flex;border:1px solid var(--line)}
+  .pb div{display:flex;align-items:center;justify-content:center;color:#fff;font-size:10.5px;font-weight:700}
+  .pb .cost{background:#a89d88}
+  .pb .prof{background:var(--green)}
+  .pbnote{font-size:12.5px;color:var(--navy);background:rgba(255,255,255,.72);
+          border:1px solid var(--line);border-left:3px solid var(--gold);padding:12px 15px;margin-top:11px;line-height:1.75}
+  .pbnote b{font-weight:800}
+  .pbnote .big{font-size:16px;font-weight:800}
+
+  table{width:100%;border-collapse:collapse;font-size:12.5px;background:rgba(255,255,255,.6)}
+  th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+  th:first-child,td:first-child{text-align:left}
+  th{font-size:9.5px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;font-weight:700;
+     border-bottom:1px solid rgba(168,132,47,.45);background:rgba(245,239,226,.7)}
+  tr.cur{background:rgba(201,169,97,.16)}
+  tr.cur td{font-weight:700;color:var(--navy)}
+  .best{color:var(--green);font-weight:800}
+  .tblwrap{overflow-x:auto}
+  td input{width:92px;padding:5px 7px;font-size:12px;text-align:right;border:1px solid var(--line);
+           border-radius:2px;background:#fff;font-family:var(--sans);font-weight:600;color:var(--ink)}
+
+  .toolbar{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-top:16px}
+  .btn{background:#fff;border:1px solid var(--line);border-radius:2px;padding:10px 16px;font-size:12.5px;
+       font-weight:700;color:var(--sub);cursor:pointer;font-family:var(--sans);transition:.15s}
+  .btn:hover{border-color:var(--gold);color:var(--gold)}
+  .btn.primary{background:var(--navy);border-color:var(--navy);color:#fff;letter-spacing:.4px}
+  .btn.primary:hover{background:var(--navy2);color:#fff}
+  .btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+  .tog{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:var(--sub);cursor:pointer}
+  .tog input{width:16px;height:16px;accent-color:var(--navy);cursor:pointer}
+  .tip{font-size:11px;color:var(--sub);margin-top:9px;line-height:1.7;
+       background:rgba(255,255,255,.6);border:1px dashed var(--line);padding:9px 11px}
+
+  .note{font-size:11.5px;color:var(--sub);margin-top:11px;line-height:1.7}
+  .disc{font-size:10px;color:var(--sub);margin-top:20px;line-height:1.75;
+        border-top:1px solid rgba(168,132,47,.3);padding-top:12px}
+  .savetag{font-size:11px;color:var(--sub);font-weight:600}
+  .hidden{display:none!important}
+
+  /* ================================================================
+     PRINT — A4 หน้าเดียว · margin:0 เพื่อตัด header/footer ของเบราว์เซอร์
+     ================================================================ */
+  @page{size:A4 portrait;margin:0}
+  @media print{
+    body{background:#fff;padding:0;font-size:9.6px;line-height:1.5;
+         -webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .noprint,.screenonly{display:none!important}
+    .printonly{display:block}
+
+    .sheet{max-width:none;width:210mm;min-height:296mm;margin:0;border-radius:0;box-shadow:none;
+           padding:10mm 11mm 8mm;background-size:26px 26px}
+    .sheet::before{inset:4.5mm}
+    .sheet::after{inset:6mm}
+
+    .logo{height:9.6mm}
+    .eyebrow{font-size:9.5px;letter-spacing:3.6px}
+    .drule{margin:2.6mm 0 2.4mm}
+    .lhttl{font-size:19px;line-height:1.26}
+    .lhsub{font-size:9.2px;margin-top:3px;line-height:1.55}
+
+    #p_meta{display:flex;flex-wrap:wrap;gap:2px 10mm;font-size:9.6px;font-weight:700;color:var(--navy);
+            margin-top:2.6mm;padding-bottom:2.2mm;border-bottom:1px solid rgba(168,132,47,.35)}
+    #p_meta i{font-style:normal;color:var(--gold);font-weight:600;letter-spacing:.8px;
+              text-transform:uppercase;font-size:8.2px;margin-right:4px}
+
+    .grid{display:block;margin:0}
+    .blk{margin-top:3.4mm}
+    h2{font-size:11.5px;margin-bottom:2mm;gap:6px}
+    h2 .n{font-size:8.4px;letter-spacing:1.2px}
+
+    .hero{padding:4mm 5mm;margin-top:3mm;break-inside:avoid}
+    .hl{font-size:8.6px;letter-spacing:2.6px}
+    .hbig{font-size:38px;margin:1.6mm 0 .5mm;letter-spacing:-1.4px}
+    .hpct{font-size:9.8px}
+    .hsplit{margin-top:3mm;padding-top:2.4mm;gap:6px}
+    .hs .l{font-size:8px;letter-spacing:.8px}
+    .hs .n{font-size:14.5px;margin-top:1.5px}
+
+    /* จับ 2 คอลัมน์เพื่อประหยัดพื้นที่แนวตั้ง */
+    .prow{display:grid;grid-template-columns:1fr 1fr;gap:5mm;align-items:start}
+    .kpis{grid-template-columns:1fr 1fr;gap:2mm}
+    .kpi{padding:2mm 2.4mm;border-top-width:1.4px}
+    .kpi .l{font-size:7.6px;letter-spacing:.5px}
+    .kpi .n{font-size:14px;margin-top:1.5px}
+    .kpi .d{font-size:7.6px;margin-top:1px}
+
+    .pb{height:6mm}
+    .pb div{font-size:8.2px}
+    .pbnote{font-size:9.4px;padding:2.6mm 3mm;margin-top:2mm;line-height:1.7}
+    .pbnote .big{font-size:12px}
+
+    table{font-size:9px}
+    th,td{padding:1.9mm 2mm}
+    th{font-size:7.6px;letter-spacing:.6px}
+    .tblwrap{overflow:visible}
+    .note{font-size:8.4px;margin-top:1.8mm;line-height:1.6}
+
+    #p_assume{font-size:8.8px;color:#4a5462;background:rgba(255,255,255,.72);
+              border:1px solid var(--line);border-left:3px solid var(--gold2);
+              padding:2.2mm 2.8mm;margin-top:3mm;line-height:1.75;break-inside:avoid}
+    #p_assume b{color:var(--navy)}
+    #p_assume .lbl{color:var(--gold);font-weight:700;text-transform:uppercase;
+                   font-size:7.8px;letter-spacing:.8px}
+
+    .disc{font-size:7.8px;margin-top:3.6mm;padding-top:2.2mm;line-height:1.6}
+
+    #p_sign{margin-top:4mm;break-inside:avoid;page-break-inside:avoid}
+    #p_sign .sgttl{font-family:var(--serif);font-size:9px;font-weight:600;letter-spacing:2.4px;
+                   text-transform:uppercase;color:var(--gold);margin-bottom:1mm}
+    #p_sign .sgrow{display:flex;gap:16mm}
+    #p_sign .sg{flex:1}
+    #p_sign .sgspace{height:21mm}
+    #p_sign .sgline{border-top:1px solid rgba(7,56,104,.55);padding-top:1.4mm;font-size:8px;
+                    font-weight:700;color:var(--navy);text-align:center;letter-spacing:.3px}
+    #p_sign .sgsub{font-size:7.8px;color:var(--sub);text-align:center;margin-top:1.2mm;line-height:1.9}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="sheet"><div class="inner">
+
+  <!-- ===== หัวกระดาษ ===== -->
+  <div class="lhtop">
+    <img class="logo" src="data:image/png;base64,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" alt="Jaysean">
+    <div class="eyebrow">Profit Blueprint</div>
+  </div>
+  <div class="drule"></div>
+  <div class="lhttl">กำไรที่คลินิกของคุณจะได้รับ</div>
+  <div class="lhsub">ประมาณการส่วนต่างต่อเคส จุดคืนทุน และรายได้ต่อเดือน — คำนวณจากราคาและปริมาณงานจริงของคลินิก</div>
+
+  <div class="dgrid screenonly">
+    <div><div class="fl">จัดทำให้</div>
+      <input id="f_clinic" type="text" placeholder="ชื่อคลินิก / ชื่อคุณหมอ" autocomplete="off"></div>
+    <div><div class="fl">ผู้แทนขาย</div>
+      <input id="f_rep" type="text" placeholder="ชื่อผู้แทน · เบอร์ติดต่อ" autocomplete="off"></div>
+    <div><div class="fl">วันที่</div>
+      <input id="f_date" type="text" placeholder="วว/ดด/ปปปป" autocomplete="off"></div>
+  </div>
+  <div class="printonly" id="p_meta"></div>
+
+  <div class="grid">
+    <!-- ===== แผงควบคุม (จอเท่านั้น) ===== -->
+    <div class="screenonly">
+      <div class="blk">
+        <h2><span class="n">01</span> สินค้า &amp; ระดับ</h2>
+        <div class="panel">
+          <label for="prod">สินค้า</label>
+          <select id="prod">
+            <option value="lavuel_pium">Lavuel Pium</option>
+            <option value="lavuel_200" selected>Lavuel 200mg</option>
+            <option value="ensor">Ensor Cell</option>
+            <option value="nim_lipo">NIM Lipo Crystal</option>
+            <option value="nim_scarlet">NIM Scarlet B12</option>
+            <option value="anolve">Anolve Exosome</option>
+            <option value="la_pomme">La Pomme</option>
+          </select>
+          <label>ระดับการสั่งซื้อ</label>
+          <div class="tierseg" id="tierseg">
+            <button data-t="0">Starter<span>1</span></button>
+            <button data-t="1" class="on">Gold<span>50+</span></button>
+            <button data-t="2">Platinum<span>100+</span></button>
+            <button data-t="3">Partner<span>500+</span></button>
+          </div>
+          <div class="hint" id="tierhint">–</div>
+        </div>
+      </div>
+
+      <div class="blk">
+        <h2><span class="n">02</span> ข้อมูลคลินิก</h2>
+        <div class="panel">
+          <label for="cpb">ฉีดได้กี่เคส ต่อ 1 กล่อง</label>
+          <input type="number" id="cpb" value="1" min="0.5" step="0.5">
+          <label for="srp">ราคาที่คลินิกเก็บคนไข้ / เคส (฿)</label>
+          <input type="number" id="srp" value="0" min="0" step="500">
+          <label for="cons">ต้นทุนอื่นของคลินิก / เคส (฿)</label>
+          <input type="number" id="cons" value="300" min="0" step="50">
+          <div class="hint">เข็ม · ยาชา · วัสดุสิ้นเปลือง</div>
+          <label for="cpm">คาดว่าทำได้กี่เคส / เดือน</label>
+          <input type="number" id="cpm" value="20" min="1" step="1">
+          <label for="course">คอร์สแนะนำ (จำนวนครั้ง)</label>
+          <input type="number" id="course" value="3" min="1" step="1">
+          <div class="hint" id="coursehint">–</div>
+        </div>
+      </div>
+
+      <div class="toolbar noprint">
+        <button class="btn primary" id="print">พิมพ์ / บันทึก PDF</button>
+        <label class="tog"><input type="checkbox" id="showcomp"> ตารางเทียบ</label>
+      </div>
+      <div class="tip noprint">
+        <b>ให้ได้หน้าเดียวสวยๆ:</b> ในหน้าต่าง Print เลือก <b>More settings</b> →
+        ติ๊ก <b>Background graphics</b> · เอาติ๊ก <b>Headers and footers</b> ออก · Margins = <b>None</b><br>
+        <span style="color:var(--gold)">※ เปิด “ตารางเทียบ” จะเกิน 1 หน้า</span>
+      </div>
+      <div class="savetag noprint" id="savetag" style="margin-top:9px">&nbsp;</div>
+    </div>
+
+    <!-- ===== ผลลัพธ์ ===== -->
+    <div>
+      <div class="hero">
+        <div class="hl">กำไรของคลินิก ต่อ 1 เคส</div>
+        <div class="hbig" id="h_profit">–</div>
+        <div class="hpct" id="h_pct">–</div>
+        <div class="hsplit">
+          <div class="hs"><div class="l">ต้นทุนต่อเคส</div><div class="n" id="h_cost">–</div></div>
+          <div class="hs"><div class="l">ราคาเก็บคนไข้</div><div class="n" id="h_srp">–</div></div>
+          <div class="hs"><div class="l">กำไรต่อคอร์ส</div><div class="n" id="h_course">–</div></div>
+        </div>
+      </div>
+
+      <div class="printonly" id="p_assume"></div>
+
+      <div class="prow">
+        <div class="blk">
+          <h2><span class="n">03</span> คืนทุนเร็วแค่ไหน</h2>
+          <div class="pb" id="pbbar"></div>
+          <div class="pbnote" id="pbnote">–</div>
+        </div>
+
+        <div class="blk">
+          <h2><span class="n">04</span> ภาพรวมออเดอร์</h2>
+          <div class="kpis">
+            <div class="kpi"><div class="l">คลินิกลงทุน</div><div class="n" id="k_inv">–</div><div class="d" id="k_invd">–</div></div>
+            <div class="kpi"><div class="l">ได้รับสินค้า</div><div class="n" id="k_box">–</div><div class="d" id="k_boxd">–</div></div>
+            <div class="kpi"><div class="l">กำไรทั้งออเดอร์</div><div class="n" id="k_prof" style="color:var(--green)">–</div><div class="d" id="k_profd">–</div></div>
+            <div class="kpi"><div class="l">กำไร / เดือน</div><div class="n" id="k_mon" style="color:var(--gold)">–</div><div class="d" id="k_mond">–</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="blk">
+        <h2><span class="n">05</span> สั่งเพิ่มขึ้น กำไรเพิ่มเท่าไหร่</h2>
+        <div class="tblwrap">
+          <table>
+            <thead><tr>
+              <th>ระดับ</th><th>สั่ง</th><th>แถม</th><th>ได้รวม</th>
+              <th>ต้นทุน/กล่อง</th><th>กำไร/เคส</th><th>กำไรทั้งออเดอร์</th><th>คืนทุน</th>
+            </tr></thead>
+            <tbody id="ladder"></tbody>
+          </table>
+        </div>
+        <div class="note" id="laddernote">–</div>
+      </div>
+
+      <div class="blk hidden" id="compcard">
+        <h2><span class="n">06</span> เปรียบเทียบกับทางเลือกอื่น</h2>
+        <div class="tblwrap">
+          <table>
+            <thead><tr><th>สินค้า</th><th>ต้นทุน/เคส</th><th>ราคาเก็บคนไข้</th><th>กำไร/เคส</th><th>% กำไร</th></tr></thead>
+            <tbody id="comp"></tbody>
+          </table>
+        </div>
+        <div class="note noprint">กรอกราคาที่สำรวจได้จริงเท่านั้น — ถ้าหมอจับได้ว่าเทียบผิด เอกสารทั้งชุดเสียความน่าเชื่อถือ</div>
+      </div>
+
+      <div class="disc">
+        ตัวเลขในเอกสารนี้เป็นการประมาณการเพื่อประกอบการพิจารณา คำนวณจากราคาสั่งซื้อและของแถมตามระดับที่ระบุ
+        ร่วมกับจำนวนเคสต่อกล่องและราคาที่คลินิกกำหนดเอง · กำไรจริงขึ้นอยู่กับการตั้งราคาและปริมาณงานของแต่ละคลินิก
+        · ราคาและเงื่อนไขของแถมอาจเปลี่ยนแปลงได้ กรุณายืนยันกับผู้แทนขายก่อนสั่งซื้อ
+      </div>
+
+      <div class="printonly" id="p_sign">
+        <div class="sgttl">รับทราบข้อมูล</div>
+        <div class="sgrow">
+          <div class="sg">
+            <div class="sgspace"></div>
+            <div class="sgline">ผู้แทนขาย · Jaysean (Thailand)</div>
+            <div class="sgsub">ชื่อ–สกุล ....................................... วันที่ ......../......../........</div>
+          </div>
+          <div class="sg">
+            <div class="sgspace"></div>
+            <div class="sgline">ผู้รับเอกสาร · คลินิก</div>
+            <div class="sgsub">ชื่อ–สกุล ....................................... วันที่ ......../......../........</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div></div>
+
+<script>
+const KEY='jaysean_clinic_sheet_sales_v4';
+const $=id=>document.getElementById(id);
+const fmt=n=>Math.round(n).toLocaleString('en-US');
+const money=n=>(n<0?'-':'')+'฿'+fmt(Math.abs(n));
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+const TIERS=['Starter','Gold','Platinum','JS Partner'];
+/* ราคาสั่งซื้อและของแถมตามระดับ — ไม่มีข้อมูลต้นทุนภายในในไฟล์นี้ */
+const PRODUCTS={
+  lavuel_pium:{name:'Lavuel Pium',list:20000,tiers:[[1,0],[50,6],[100,25],[500,167]]},
+  lavuel_200 :{name:'Lavuel 200mg',list:7000,tiers:[[1,0],[50,4],[100,25],[500,278]]},
+  ensor      :{name:'Ensor Cell',list:4200,tiers:[[1,0],[50,5],[100,24],[500,200]]},
+  nim_lipo   :{name:'NIM Lipo Crystal',list:3500,tiers:[[1,0],[50,4],[100,16],[500,125]]},
+  nim_scarlet:{name:'NIM Scarlet B12',list:3800,tiers:[[1,0],[50,4],[100,16],[500,133]]},
+  anolve     :{name:'Anolve Exosome',list:2000,tiers:[[1,0],[50,7],[100,31],[500,269]]},
+  la_pomme   :{name:'La Pomme',list:900,tiers:[[1,0],[50,6],[100,29],[500,250]]}
+};
+const COMP_ROWS=['Rejuran','Juvelook','Lenisna','ทางเลือกอื่น'];
+
+let state={byProd:{},comp:{},tier:1,meta:{},showcomp:false};
+let tier=1, timer=null;
+
+function save(){
+  clearTimeout(timer);
+  timer=setTimeout(async()=>{
+    try{ await window.storage.set(KEY,JSON.stringify(state)); $('savetag').textContent='บันทึกแล้ว ✓'; }
+    catch(e){ $('savetag').textContent='บันทึกไม่สำเร็จ'; }
+  },400);
+}
+async function load(){
+  try{
+    const r=await window.storage.get(KEY);
+    if(r&&r.value) state=Object.assign(state,JSON.parse(r.value));
+  }catch(e){}
+  tier=state.tier??1;
+  document.querySelectorAll('#tierseg button').forEach(x=>x.classList.toggle('on',+x.dataset.t===tier));
+  ['clinic','rep','date'].forEach(k=>{ if(state.meta[k]) $('f_'+k).value=state.meta[k]; });
+  if(!$('f_date').value) $('f_date').value=new Date().toLocaleDateString('th-TH',{day:'2-digit',month:'2-digit',year:'numeric'});
+  $('showcomp').checked=!!state.showcomp;
+  $('compcard').classList.toggle('hidden',!state.showcomp);
+  buildComp();
+  applyProd();
+}
+
+const P=()=>PRODUCTS[$('prod').value];
+const effPrice=(p,ti)=>{const[a,b]=p.tiers[ti];return a*p.list/(a+b);};
+
+function applyProd(){
+  const s=state.byProd[$('prod').value], p=P();
+  $('cpb').value = s?.cpb ?? 1;
+  $('cons').value= s?.cons ?? 300;
+  $('cpm').value = s?.cpm ?? 20;
+  $('course').value = s?.course ?? 3;
+  $('srp').value = s?.srp ?? Math.round(effPrice(p,tier)*2.5/500)*500;
+  calc();
+}
+function storeAll(){
+  state.byProd[$('prod').value]={cpb:+$('cpb').value,srp:+$('srp').value,cons:+$('cons').value,
+    cpm:+$('cpm').value,course:+$('course').value};
+  state.tier=tier;
+  state.meta={clinic:$('f_clinic').value,rep:$('f_rep').value,date:$('f_date').value};
+  save();
+}
+
+function buildComp(){
+  const tb=$('comp'); tb.innerHTML='';
+  COMP_ROWS.forEach((n,i)=>{
+    const c=state.comp[i]||{cost:0,srp:0};
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${n}</td>
+      <td><input type="number" step="100" value="${c.cost||''}" placeholder="0" data-i="${i}" data-k="cost"></td>
+      <td><input type="number" step="500" value="${c.srp||''}" placeholder="0" data-i="${i}" data-k="srp"></td>
+      <td id="cp_${i}">–</td><td id="cm_${i}">–</td>`;
+    tb.appendChild(tr);
+  });
+  const tr=document.createElement('tr'); tr.className='cur'; tr.id='comp_us'; tb.appendChild(tr);
+  tb.querySelectorAll('input').forEach(inp=>{
+    inp.oninput=e=>{
+      const i=e.target.dataset.i,k=e.target.dataset.k;
+      state.comp[i]=state.comp[i]||{cost:0,srp:0};
+      state.comp[i][k]=+e.target.value||0; save(); calc();
+    };
+  });
+}
+
+function calc(){
+  const p=P(), [paid,free]=p.tiers[tier], units=paid+free, eff=effPrice(p,tier);
+  const cpb=Math.max(.5,+$('cpb').value||1), srp=+$('srp').value||0, cons=+$('cons').value||0;
+  const cpm=Math.max(1,+$('cpm').value||1), courseN=Math.max(1,+$('course').value||1);
+
+  $('tierhint').innerHTML=`<b>${TIERS[tier]}</b> — สั่ง ${paid} แถม ${free} → ได้ <b>${units} กล่อง</b><br>
+    ราคา ฿${fmt(p.list)}/กล่อง → เฉลี่ยจริง <b>฿${fmt(eff)}/กล่อง</b>`
+    + (free>0?` <span style="color:var(--green);font-weight:800">(ถูกลง ${((1-eff/p.list)*100).toFixed(0)}%)</span>`:'');
+
+  const varCost=eff/cpb+cons, profCase=srp-varCost, pct=srp>0?profCase/srp*100:0;
+
+  $('h_profit').textContent = srp>0?money(profCase):'—';
+  $('h_pct').textContent = srp>0?`คิดเป็น ${pct.toFixed(0)}% ของราคาที่เก็บคนไข้`:'กรอกราคาที่คลินิกเก็บคนไข้เพื่อดูตัวเลข';
+  $('h_cost').textContent=money(varCost);
+  $('h_srp').textContent=money(srp);
+  $('h_course').textContent=money(profCase*courseN);
+  $('coursehint').textContent=`คอร์ส ${courseN} ครั้ง → กำไร ${money(profCase*courseN)} ต่อคนไข้ 1 คน`;
+
+  const bar=$('pbbar'), totalCases=units*cpb;
+  if(srp>cons && profCase>0){
+    const kBox=eff/(srp-cons), kOrder=(paid*p.list)/(srp-cons);
+    const cw=Math.min(100,kOrder/totalCases*100);
+    bar.innerHTML=`<div class="cost" style="width:${cw}%">คืนทุน ${Math.ceil(kOrder)} เคส</div>
+      <div class="prof" style="width:${100-cw}%">${totalCases-Math.ceil(kOrder)>0?'กำไรล้วน '+fmt(totalCases-Math.ceil(kOrder))+' เคส':''}</div>`;
+    $('pbnote').innerHTML=`ขายเพียง <span class="big">${Math.ceil(kBox)} เคส</span> ก็คืนทุนกล่องนั้นแล้ว ·
+      ทั้งออเดอร์คืนทุนที่ <b>${Math.ceil(kOrder)} เคส</b> จาก ${fmt(totalCases)} เคส<br>
+      ที่เหลืออีก <span class="big">${fmt(Math.max(0,totalCases-Math.ceil(kOrder)))} เคส คือกำไรล้วน</span>
+      <span style="color:var(--sub)">(≈ ${(kOrder/cpm).toFixed(1)} เดือน ที่ ${cpm} เคส/เดือน)</span>`;
+  }else{
+    bar.innerHTML=`<div class="cost" style="width:100%">ยังไม่คืนทุน</div>`;
+    $('pbnote').textContent='ราคาที่เก็บคนไข้ยังต่ำกว่าต้นทุน — ลองปรับราคาหรือระดับการสั่งซื้อ';
+  }
+
+  const invest=paid*p.list, orderProfit=totalCases*srp-invest-totalCases*cons;
+  $('k_inv').textContent=money(invest);
+  $('k_invd').textContent=`${fmt(paid)} กล่อง × ฿${fmt(p.list)}`;
+  $('k_box').textContent=fmt(units)+' กล่อง';
+  $('k_boxd').textContent=`= ${fmt(totalCases)} เคส`+(free>0?` · ฟรี ${free}`:'');
+  $('k_prof').textContent=srp>0?money(orderProfit):'–';
+  $('k_profd').textContent=(srp>0&&invest>0)?`คืนทุน ${(orderProfit/invest*100).toFixed(0)}% ของเงินที่ลง`:'–';
+  $('k_mon').textContent=srp>0?money(cpm*profCase):'–';
+  $('k_mond').textContent=srp>0?`${cpm} เคส/เดือน · ปีละ ${money(cpm*profCase*12)}`:'–';
+
+  const lb=$('ladder'); lb.innerHTML='';
+  const rows=p.tiers.map((t,i)=>{
+    const [pd,fr]=t, un=pd+fr, e=pd*p.list/un, pc=srp-(e/cpb)-cons;
+    const tc=un*cpb, op=tc*srp-pd*p.list-tc*cons;
+    return {i,pd,fr,un,e,pc,op,kb:srp>cons?Math.ceil(e/(srp-cons)):null};
+  });
+  const bestOp=Math.max(...rows.map(r=>r.op));
+  rows.forEach(r=>{
+    const tr=document.createElement('tr'); if(r.i===tier)tr.className='cur';
+    tr.innerHTML=`<td>${TIERS[r.i]}</td><td>${fmt(r.pd)}</td><td>${r.fr||'–'}</td><td>${fmt(r.un)}</td>
+      <td>${money(r.e)}</td><td>${srp>0?money(r.pc):'–'}</td>
+      <td class="${r.op===bestOp&&srp>0?'best':''}">${srp>0?money(r.op):'–'}</td>
+      <td>${r.kb?r.kb+' เคส':'–'}</td>`;
+    lb.appendChild(tr);
+  });
+  const cur=rows[tier], nxt=rows[tier+1];
+  $('laddernote').innerHTML = (nxt&&srp>0)
+    ? `หากขยับจาก <b>${TIERS[tier]}</b> ไป <b>${TIERS[tier+1]}</b>: ลงทุนเพิ่ม ${money(nxt.pd*p.list-cur.pd*p.list)}
+       แต่กำไรทั้งออเดอร์เพิ่มขึ้น <b style="color:var(--green)">${money(nxt.op-cur.op)}</b>
+       และต้นทุนต่อกล่องลดลงอีก ${money(cur.e-nxt.e)}`
+    : (srp>0?'ระดับสูงสุด — ต้นทุนต่อกล่องถูกที่สุดเท่าที่เป็นไปได้':'กรอกราคาที่เก็บคนไข้เพื่อดูการเปรียบเทียบ');
+
+  COMP_ROWS.forEach((n,i)=>{
+    const c=state.comp[i]||{cost:0,srp:0}, pr=(c.srp||0)-(c.cost||0);
+    $('cp_'+i).textContent=(c.srp&&c.cost)?money(pr):'–';
+    $('cm_'+i).textContent=(c.srp&&c.cost)?((pr/c.srp*100).toFixed(0)+'%'):'–';
+  });
+  $('comp_us').innerHTML=`<td>${p.name}</td><td>${money(varCost)}</td><td>${srp>0?money(srp):'–'}</td>
+    <td class="best">${srp>0?money(profCase):'–'}</td><td class="best">${srp>0?pct.toFixed(0)+'%':'–'}</td>`;
+
+  const mc=$('f_clinic').value.trim(), mr=$('f_rep').value.trim(), md=$('f_date').value.trim();
+  $('p_meta').innerHTML =
+    `<span><i>จัดทำให้</i>${esc(mc)||'—'}</span>`+
+    `<span><i>ผู้แทนขาย</i>${esc(mr)||'—'}</span>`+
+    `<span><i>วันที่</i>${esc(md)||'—'}</span>`;
+  $('p_assume').innerHTML =
+    `<b>${p.name}</b> · ระดับ <b>${TIERS[tier]}</b> — สั่ง ${fmt(paid)} กล่อง แถม ${free} กล่อง `+
+    `รวม <b>${fmt(units)} กล่อง</b> · ราคา ฿${fmt(p.list)}/กล่อง → ต้นทุนเฉลี่ย <b>฿${fmt(eff)}/กล่อง</b>`+
+    (free>0?` (ถูกลง ${((1-eff/p.list)*100).toFixed(0)}%)`:'')+
+    `<br><span class="lbl">ตัวเลขที่ใช้คำนวณ</span> ฉีดได้ ${cpb} เคส/กล่อง · คลินิกเก็บคนไข้ ${money(srp)}/เคส · `+
+    `ต้นทุนอื่น ${money(cons)}/เคส · ประมาณ ${cpm} เคส/เดือน · คอร์สแนะนำ ${courseN} ครั้ง`;
+
+  storeAll();
+}
+
+$('tierseg').onclick=e=>{
+  const b=e.target.closest('button'); if(!b)return;
+  tier=+b.dataset.t;
+  document.querySelectorAll('#tierseg button').forEach(x=>x.classList.toggle('on',x===b));
+  calc();
+};
+$('prod').onchange=applyProd;
+['cpb','srp','cons','cpm','course'].forEach(id=>$(id).addEventListener('input',calc));
+['f_clinic','f_rep','f_date'].forEach(id=>$(id).addEventListener('input',calc));
+$('print').onclick=()=>window.print();
+$('showcomp').onchange=e=>{
+  state.showcomp=e.target.checked;
+  $('compcard').classList.toggle('hidden',!state.showcomp);
+  save();
+};
+
+load();
+</script>
+</body>
+</html>
