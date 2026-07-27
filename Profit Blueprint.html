@@ -2,20 +2,21 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Jaysean</title>
 <style>
   :root{
     --navy:#073868; --navy2:#0d4a80; --ink:#1a2432; --sub:#7b8493;
-    --gold:#a8842f; --gold2:#c9a961; --goldl:#e2cfa0;
-    --ivory:#fbf7ef; --ivory2:#f5efe2; --line:#e6dfd0;
-    --green:#0f7a4d; --rose:#a8365f;
+    --gold:#a8842f; --gold2:#c9a961;
+    --ivory:#fbf7ef; --line:#e6dfd0;
+    --green:#0f7a4d;
     --serif:"Didot","Bodoni MT","Playfair Display",Georgia,"Times New Roman",serif;
     --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","Sarabun",sans-serif;
   }
   *{box-sizing:border-box;margin:0;padding:0}
+  html,body{overflow-x:hidden}
   body{background:#e8e3d8;color:var(--ink);line-height:1.55;font-family:var(--sans);
-       font-variant-numeric:tabular-nums;padding:22px 14px 46px}
+       font-variant-numeric:tabular-nums;padding:22px 14px 46px;-webkit-text-size-adjust:100%}
   .printonly{display:none}
 
   /* ===== หน้ากระดาษ ===== */
@@ -25,11 +26,9 @@
          background-image:
            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34'%3E%3Cpath d='M17 1L33 17L17 33L1 17Z' fill='none' stroke='%23a8842f' stroke-width='.55' opacity='.13'/%3E%3Ccircle cx='17' cy='17' r='1.1' fill='%23a8842f' opacity='.1'/%3E%3C/svg%3E");
          background-size:34px 34px}
-  /* กรอบทองคู่ */
   .sheet::before{content:'';position:absolute;inset:11px;border:1px solid rgba(168,132,47,.42);pointer-events:none}
   .sheet::after{content:'';position:absolute;inset:15px;border:1px solid rgba(168,132,47,.18);pointer-events:none}
   .inner{position:relative;z-index:1}
-  @media(max-width:560px){.sheet{padding:22px 18px 26px}}
 
   /* ===== หัวกระดาษ ===== */
   .lhtop{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
@@ -41,12 +40,10 @@
   .drule::before{top:0;height:1.4px}
   .drule::after{top:3px;height:.6px;background:rgba(168,132,47,.32)}
   .lhttl{font-size:27px;font-weight:700;color:var(--navy);line-height:1.28;letter-spacing:-.2px}
-  @media(max-width:560px){.lhttl{font-size:21px}}
   .lhsub{font-size:12.5px;color:var(--sub);margin-top:6px;max-width:660px;line-height:1.65}
 
   /* ===== ข้อมูลเอกสาร ===== */
   .dgrid{display:grid;grid-template-columns:1fr 1fr 156px;gap:13px;margin-top:18px}
-  @media(max-width:640px){.dgrid{grid-template-columns:1fr}}
   .fl{font-family:var(--serif);font-size:10px;color:var(--gold);font-weight:600;
       text-transform:uppercase;letter-spacing:2px;margin-bottom:5px}
   .dgrid input{width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:2px;
@@ -56,7 +53,6 @@
 
   /* ===== เลย์เอาต์ ===== */
   .grid{display:grid;grid-template-columns:300px 1fr;gap:20px;margin-top:20px;align-items:start}
-  @media(max-width:900px){.grid{grid-template-columns:1fr}}
   .blk{margin-top:20px}
   .blk:first-child{margin-top:0}
   h2{display:flex;align-items:center;gap:9px;font-family:var(--serif);font-size:15px;font-weight:600;
@@ -67,13 +63,13 @@
   .panel{background:rgba(255,255,255,.66);border:1px solid var(--line);padding:16px 17px}
   label{display:block;font-size:12px;color:var(--sub);font-weight:700;margin:13px 0 5px}
   .panel label:first-of-type{margin-top:0}
-  select,.panel input[type=number]{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:2px;
-    font-size:13.5px;background:#fff;color:var(--ink);font-family:var(--sans);font-weight:600}
+  select,.panel input[type=number]{width:100%;padding:10px 11px;border:1px solid var(--line);border-radius:2px;
+    font-size:14px;background:#fff;color:var(--ink);font-family:var(--sans);font-weight:600}
   select:focus,input:focus{outline:none;border-color:var(--gold)}
   .hint{font-size:11px;color:var(--sub);margin-top:5px;line-height:1.6}
 
   .tierseg{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:5px}
-  .tierseg button{background:#fff;border:1px solid var(--line);border-radius:2px;padding:8px 3px;
+  .tierseg button{background:#fff;border:1px solid var(--line);border-radius:2px;padding:9px 3px;
     font-size:10.5px;font-weight:700;color:var(--sub);cursor:pointer;font-family:var(--sans);line-height:1.3;transition:.15s}
   .tierseg button span{display:block;font-size:9px;font-weight:500;opacity:.75}
   .tierseg button.on{background:var(--navy);border-color:var(--navy);color:#fff}
@@ -90,17 +86,14 @@
   .hl{font-family:var(--serif);font-size:11px;font-weight:600;letter-spacing:3px;
       text-transform:uppercase;color:var(--gold2)}
   .hbig{font-size:56px;font-weight:800;line-height:1.02;margin:9px 0 3px;letter-spacing:-1.8px;color:#fff}
-  @media(max-width:560px){.hbig{font-size:42px}}
   .hpct{font-size:13.5px;font-weight:500;color:rgba(255,255,255,.8)}
   .hsplit{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px;
           padding-top:17px;border-top:1px solid rgba(201,169,97,.4)}
-  @media(max-width:560px){.hsplit{grid-template-columns:1fr 1fr}}
   .hs .l{font-size:10px;color:rgba(201,169,97,.9);font-weight:600;letter-spacing:1.2px;text-transform:uppercase}
   .hs .n{font-size:19px;font-weight:700;margin-top:3px}
 
   /* ===== KPI ===== */
   .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-  @media(max-width:780px){.kpis{grid-template-columns:repeat(2,1fr)}}
   .kpi{background:rgba(255,255,255,.72);border:1px solid var(--line);padding:13px;
        border-top:2px solid var(--gold2)}
   .kpi .l{font-size:9.5px;color:var(--sub);font-weight:700;text-transform:uppercase;letter-spacing:.9px}
@@ -124,112 +117,221 @@
   tr.cur{background:rgba(201,169,97,.16)}
   tr.cur td{font-weight:700;color:var(--navy)}
   .best{color:var(--green);font-weight:800}
-  .tblwrap{overflow-x:auto}
-  td input{width:92px;padding:5px 7px;font-size:12px;text-align:right;border:1px solid var(--line);
+  .tblwrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .swipe{display:none;font-size:10.5px;color:var(--gold);font-weight:700;margin-bottom:5px}
+  td input{width:92px;padding:6px 7px;font-size:14px;text-align:right;border:1px solid var(--line);
            border-radius:2px;background:#fff;font-family:var(--sans);font-weight:600;color:var(--ink)}
 
+  /* ===== ปุ่ม ===== */
   .toolbar{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-top:16px}
-  .btn{background:#fff;border:1px solid var(--line);border-radius:2px;padding:10px 16px;font-size:12.5px;
-       font-weight:700;color:var(--sub);cursor:pointer;font-family:var(--sans);transition:.15s}
+  .btn{background:#fff;border:1px solid var(--line);border-radius:2px;padding:12px 16px;font-size:13px;
+       font-weight:700;color:var(--sub);cursor:pointer;font-family:var(--sans);transition:.15s;
+       min-height:44px;display:inline-flex;align-items:center;justify-content:center;gap:7px}
   .btn:hover{border-color:var(--gold);color:var(--gold)}
-  .btn.primary{background:var(--navy);border-color:var(--navy);color:#fff;letter-spacing:.4px}
+  .btn.primary{background:var(--navy);border-color:var(--navy);color:#fff;letter-spacing:.3px}
   .btn.primary:hover{background:var(--navy2);color:#fff}
+  .btn:disabled{opacity:.55;cursor:progress}
   .btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
-  .tog{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:var(--sub);cursor:pointer}
-  .tog input{width:16px;height:16px;accent-color:var(--navy);cursor:pointer}
-  .tip{font-size:11px;color:var(--sub);margin-top:9px;line-height:1.7;
-       background:rgba(255,255,255,.6);border:1px dashed var(--line);padding:9px 11px}
+  .tog{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600;color:var(--sub);
+       cursor:pointer;min-height:44px}
+  .tog input{width:20px;height:20px;accent-color:var(--navy);cursor:pointer}
+  .tip{font-size:11.5px;color:var(--sub);margin-top:10px;line-height:1.75;
+       background:rgba(255,255,255,.6);border:1px dashed var(--line);padding:10px 12px}
+  .status{font-size:12px;color:var(--gold);font-weight:700;margin-top:9px;min-height:18px}
 
   .note{font-size:11.5px;color:var(--sub);margin-top:11px;line-height:1.7}
   .disc{font-size:10px;color:var(--sub);margin-top:20px;line-height:1.75;
         border-top:1px solid rgba(168,132,47,.3);padding-top:12px}
-  .savetag{font-size:11px;color:var(--sub);font-weight:600}
   .hidden{display:none!important}
 
-  /* ================================================================
-     PRINT — A4 หน้าเดียว · margin:0 เพื่อตัด header/footer ของเบราว์เซอร์
-     ================================================================ */
+  /* ===== แถบปุ่มลอยบนมือถือ ===== */
+  .fab{display:none;position:fixed;left:0;right:0;bottom:0;z-index:60;
+       padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+       background:rgba(251,247,239,.94);backdrop-filter:blur(10px);
+       border-top:1px solid rgba(168,132,47,.4);gap:9px}
+  .fab .btn{flex:1;margin:0}
+
+  /* ===== โมดัลรูป ===== */
+  .modal{display:none;position:fixed;inset:0;z-index:100;background:rgba(16,22,32,.82);
+         padding:16px;overflow:auto;-webkit-overflow-scrolling:touch}
+  .modal.on{display:block}
+  .mbox{max-width:640px;margin:0 auto;background:var(--ivory);border:1px solid var(--gold2);
+        padding:16px;border-radius:3px}
+  .mbox h3{font-family:var(--serif);font-size:16px;color:var(--navy);margin-bottom:4px}
+  .mbox p{font-size:12.5px;color:var(--sub);line-height:1.7;margin-bottom:11px}
+  .mbox img{width:100%;height:auto;display:block;border:1px solid var(--line);
+            box-shadow:0 6px 20px rgba(0,0,0,.14)}
+  .mrow{display:flex;gap:9px;margin-top:13px;flex-wrap:wrap}
+  .mrow .btn{flex:1}
+
+  /* ================= MOBILE / TABLET ================= */
+  @media(max-width:900px){ .grid{grid-template-columns:1fr} }
+  @media(max-width:680px){
+    body{padding:8px 7px 88px}
+    .sheet{padding:20px 15px 24px;border-radius:2px;background-size:28px 28px}
+    .sheet::before{inset:6px}
+    .sheet::after{inset:9px}
+    .lhtop{gap:10px}
+    .logo{height:26px}
+    .eyebrow{font-size:10px;letter-spacing:3px}
+    .lhttl{font-size:20px;line-height:1.3}
+    .lhsub{font-size:12px}
+    .dgrid{grid-template-columns:1fr;gap:11px}
+    .grid{gap:16px;margin-top:16px}
+    .blk{margin-top:16px}
+    h2{font-size:14px}
+    .panel{padding:13px 13px}
+    .tierseg{grid-template-columns:1fr 1fr;gap:6px}
+    .tierseg button{padding:12px 4px;font-size:12px;min-height:46px}
+    .hero{padding:19px 17px}
+    .hbig{font-size:40px;letter-spacing:-1.2px}
+    .hsplit{grid-template-columns:1fr 1fr;gap:11px}
+    .kpis{grid-template-columns:1fr 1fr;gap:8px}
+    .kpi{padding:11px}
+    .kpi .n{font-size:18px}
+    .pbnote{font-size:12px;padding:11px 12px}
+    table{font-size:12px}
+    th,td{padding:8px 7px}
+    .swipe{display:block}
+    .toolbar{display:none}       /* ใช้แถบลอยด้านล่างแทน */
+    .fab{display:flex}
+  }
+  @media(max-width:380px){
+    .hbig{font-size:34px}
+    .hsplit{grid-template-columns:1fr}
+    .lhttl{font-size:18px}
+  }
+
+  /* ============ โหมดเอกสาร (ใช้ทั้งตอนพิมพ์ และตอนสร้างรูป) ============ */
   @page{size:A4 portrait;margin:0}
   @media print{
     body{background:#fff;padding:0;font-size:9.6px;line-height:1.5;
          -webkit-print-color-adjust:exact;print-color-adjust:exact}
-    .noprint,.screenonly{display:none!important}
+    .noprint,.screenonly,.fab,.modal{display:none!important}
     .printonly{display:block}
-
     .sheet{max-width:none;width:210mm;min-height:296mm;margin:0;border-radius:0;box-shadow:none;
-           padding:10mm 11mm 8mm;background-size:26px 26px}
+            padding:10mm 11mm 8mm;background-size:26px 26px}
     .sheet::before{inset:4.5mm}
     .sheet::after{inset:6mm}
-
     .logo{height:9.6mm}
     .eyebrow{font-size:9.5px;letter-spacing:3.6px}
     .drule{margin:2.6mm 0 2.4mm}
     .lhttl{font-size:19px;line-height:1.26}
-    .lhsub{font-size:9.2px;margin-top:3px;line-height:1.55}
-
+    .lhsub{font-size:9.2px;margin-top:3px;line-height:1.55;max-width:none}
     #p_meta{display:flex;flex-wrap:wrap;gap:2px 10mm;font-size:9.6px;font-weight:700;color:var(--navy);
-            margin-top:2.6mm;padding-bottom:2.2mm;border-bottom:1px solid rgba(168,132,47,.35)}
+             margin-top:2.6mm;padding-bottom:2.2mm;border-bottom:1px solid rgba(168,132,47,.35)}
     #p_meta i{font-style:normal;color:var(--gold);font-weight:600;letter-spacing:.8px;
-              text-transform:uppercase;font-size:8.2px;margin-right:4px}
-
-    .grid{display:block;margin:0}
+               text-transform:uppercase;font-size:8.2px;margin-right:4px}
+    .grid{display:block;margin:0;grid-template-columns:none}
     .blk{margin-top:3.4mm}
     h2{font-size:11.5px;margin-bottom:2mm;gap:6px}
     h2 .n{font-size:8.4px;letter-spacing:1.2px}
-
     .hero{padding:4mm 5mm;margin-top:3mm;break-inside:avoid}
     .hl{font-size:8.6px;letter-spacing:2.6px}
     .hbig{font-size:38px;margin:1.6mm 0 .5mm;letter-spacing:-1.4px}
     .hpct{font-size:9.8px}
-    .hsplit{margin-top:3mm;padding-top:2.4mm;gap:6px}
+    .hsplit{grid-template-columns:repeat(3,1fr);margin-top:3mm;padding-top:2.4mm;gap:6px}
     .hs .l{font-size:8px;letter-spacing:.8px}
     .hs .n{font-size:14.5px;margin-top:1.5px}
-
-    /* จับ 2 คอลัมน์เพื่อประหยัดพื้นที่แนวตั้ง */
     .prow{display:grid;grid-template-columns:1fr 1fr;gap:5mm;align-items:start}
-    .kpis{grid-template-columns:1fr 1fr;gap:2mm}
+    .kpis{display:grid;grid-template-columns:1fr 1fr;gap:2mm}
     .kpi{padding:2mm 2.4mm;border-top-width:1.4px}
     .kpi .l{font-size:7.6px;letter-spacing:.5px}
     .kpi .n{font-size:14px;margin-top:1.5px}
     .kpi .d{font-size:7.6px;margin-top:1px}
-
     .pb{height:6mm}
     .pb div{font-size:8.2px}
     .pbnote{font-size:9.4px;padding:2.6mm 3mm;margin-top:2mm;line-height:1.7}
     .pbnote .big{font-size:12px}
-
     table{font-size:9px}
     th,td{padding:1.9mm 2mm}
     th{font-size:7.6px;letter-spacing:.6px}
     .tblwrap{overflow:visible}
     .note{font-size:8.4px;margin-top:1.8mm;line-height:1.6}
-
     #p_assume{font-size:8.8px;color:#4a5462;background:rgba(255,255,255,.72);
-              border:1px solid var(--line);border-left:3px solid var(--gold2);
-              padding:2.2mm 2.8mm;margin-top:3mm;line-height:1.75;break-inside:avoid}
+               border:1px solid var(--line);border-left:3px solid var(--gold2);
+               padding:2.2mm 2.8mm;margin-top:3mm;line-height:1.75;break-inside:avoid}
     #p_assume b{color:var(--navy)}
     #p_assume .lbl{color:var(--gold);font-weight:700;text-transform:uppercase;
-                   font-size:7.8px;letter-spacing:.8px}
-
+                    font-size:7.8px;letter-spacing:.8px}
     .disc{font-size:7.8px;margin-top:3.6mm;padding-top:2.2mm;line-height:1.6}
-
     #p_sign{margin-top:4mm;break-inside:avoid;page-break-inside:avoid}
     #p_sign .sgttl{font-family:var(--serif);font-size:9px;font-weight:600;letter-spacing:2.4px;
-                   text-transform:uppercase;color:var(--gold);margin-bottom:1mm}
+                    text-transform:uppercase;color:var(--gold);margin-bottom:1mm}
     #p_sign .sgrow{display:flex;gap:16mm}
     #p_sign .sg{flex:1}
     #p_sign .sgspace{height:21mm}
     #p_sign .sgline{border-top:1px solid rgba(7,56,104,.55);padding-top:1.4mm;font-size:8px;
-                    font-weight:700;color:var(--navy);text-align:center;letter-spacing:.3px}
+                     font-weight:700;color:var(--navy);text-align:center;letter-spacing:.3px}
     #p_sign .sgsub{font-size:7.8px;color:var(--sub);text-align:center;margin-top:1.2mm;line-height:1.9}
   }
-  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+  /* โหมดถ่ายรูป — เรนเดอร์เหมือนหน้ากระดาษ A4 เป๊ะ */
+  body.shotmode{background:#fff;padding:0;font-size:9.6px;line-height:1.5;
+       -webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body.shotmode .noprint,body.shotmode .screenonly,body.shotmode .fab,body.shotmode .modal{display:none!important}
+  body.shotmode .printonly{display:block}
+  body.shotmode .sheet{max-width:none;width:210mm;min-height:296mm;margin:0;border-radius:0;box-shadow:none;
+          padding:10mm 11mm 8mm;background-size:26px 26px}
+  body.shotmode .sheet::before{inset:4.5mm}
+  body.shotmode .sheet::after{inset:6mm}
+  body.shotmode .logo{height:9.6mm}
+  body.shotmode .eyebrow{font-size:9.5px;letter-spacing:3.6px}
+  body.shotmode .drule{margin:2.6mm 0 2.4mm}
+  body.shotmode .lhttl{font-size:19px;line-height:1.26}
+  body.shotmode .lhsub{font-size:9.2px;margin-top:3px;line-height:1.55;max-width:none}
+  body.shotmode #p_meta{display:flex;flex-wrap:wrap;gap:2px 10mm;font-size:9.6px;font-weight:700;color:var(--navy);
+           margin-top:2.6mm;padding-bottom:2.2mm;border-bottom:1px solid rgba(168,132,47,.35)}
+  body.shotmode #p_meta i{font-style:normal;color:var(--gold);font-weight:600;letter-spacing:.8px;
+             text-transform:uppercase;font-size:8.2px;margin-right:4px}
+  body.shotmode .grid{display:block;margin:0;grid-template-columns:none}
+  body.shotmode .blk{margin-top:3.4mm}
+  body.shotmode h2{font-size:11.5px;margin-bottom:2mm;gap:6px}
+  body.shotmode h2 .n{font-size:8.4px;letter-spacing:1.2px}
+  body.shotmode .hero{padding:4mm 5mm;margin-top:3mm;break-inside:avoid}
+  body.shotmode .hl{font-size:8.6px;letter-spacing:2.6px}
+  body.shotmode .hbig{font-size:38px;margin:1.6mm 0 .5mm;letter-spacing:-1.4px}
+  body.shotmode .hpct{font-size:9.8px}
+  body.shotmode .hsplit{grid-template-columns:repeat(3,1fr);margin-top:3mm;padding-top:2.4mm;gap:6px}
+  body.shotmode .hs .l{font-size:8px;letter-spacing:.8px}
+  body.shotmode .hs .n{font-size:14.5px;margin-top:1.5px}
+  body.shotmode .prow{display:grid;grid-template-columns:1fr 1fr;gap:5mm;align-items:start}
+  body.shotmode .kpis{display:grid;grid-template-columns:1fr 1fr;gap:2mm}
+  body.shotmode .kpi{padding:2mm 2.4mm;border-top-width:1.4px}
+  body.shotmode .kpi .l{font-size:7.6px;letter-spacing:.5px}
+  body.shotmode .kpi .n{font-size:14px;margin-top:1.5px}
+  body.shotmode .kpi .d{font-size:7.6px;margin-top:1px}
+  body.shotmode .pb{height:6mm}
+  body.shotmode .pb div{font-size:8.2px}
+  body.shotmode .pbnote{font-size:9.4px;padding:2.6mm 3mm;margin-top:2mm;line-height:1.7}
+  body.shotmode .pbnote .big{font-size:12px}
+  body.shotmode table{font-size:9px}
+  body.shotmode th,body.shotmode td{padding:1.9mm 2mm}
+  body.shotmode th{font-size:7.6px;letter-spacing:.6px}
+  body.shotmode .tblwrap{overflow:visible}
+  body.shotmode .note{font-size:8.4px;margin-top:1.8mm;line-height:1.6}
+  body.shotmode #p_assume{font-size:8.8px;color:#4a5462;background:rgba(255,255,255,.72);
+             border:1px solid var(--line);border-left:3px solid var(--gold2);
+             padding:2.2mm 2.8mm;margin-top:3mm;line-height:1.75;break-inside:avoid}
+  body.shotmode #p_assume b{color:var(--navy)}
+  body.shotmode #p_assume .lbl{color:var(--gold);font-weight:700;text-transform:uppercase;
+                  font-size:7.8px;letter-spacing:.8px}
+  body.shotmode .disc{font-size:7.8px;margin-top:3.6mm;padding-top:2.2mm;line-height:1.6}
+  body.shotmode #p_sign{margin-top:4mm;break-inside:avoid;page-break-inside:avoid}
+  body.shotmode #p_sign .sgttl{font-family:var(--serif);font-size:9px;font-weight:600;letter-spacing:2.4px;
+                  text-transform:uppercase;color:var(--gold);margin-bottom:1mm}
+  body.shotmode #p_sign .sgrow{display:flex;gap:16mm}
+  body.shotmode #p_sign .sg{flex:1}
+  body.shotmode #p_sign .sgspace{height:21mm}
+  body.shotmode #p_sign .sgline{border-top:1px solid rgba(7,56,104,.55);padding-top:1.4mm;font-size:8px;
+                   font-weight:700;color:var(--navy);text-align:center;letter-spacing:.3px}
+  body.shotmode #p_sign .sgsub{font-size:7.8px;color:var(--sub);text-align:center;margin-top:1.2mm;line-height:1.9}
 </style>
 </head>
 <body>
+
 <div class="sheet"><div class="inner">
 
-  <!-- ===== หัวกระดาษ ===== -->
   <div class="lhtop">
     <img class="logo" src="data:image/png;base64,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" alt="Jaysean">
     <div class="eyebrow">Profit Blueprint</div>
@@ -249,7 +351,7 @@
   <div class="printonly" id="p_meta"></div>
 
   <div class="grid">
-    <!-- ===== แผงควบคุม (จอเท่านั้น) ===== -->
+    <!-- ===== แผงควบคุม ===== -->
     <div class="screenonly">
       <div class="blk">
         <h2><span class="n">01</span> สินค้า &amp; ระดับ</h2>
@@ -279,30 +381,31 @@
         <h2><span class="n">02</span> ข้อมูลคลินิก</h2>
         <div class="panel">
           <label for="cpb">ฉีดได้กี่เคส ต่อ 1 กล่อง</label>
-          <input type="number" id="cpb" value="1" min="0.5" step="0.5">
+          <input type="number" id="cpb" value="1" min="0.5" step="0.5" inputmode="decimal">
           <label for="srp">ราคาที่คลินิกเก็บคนไข้ / เคส (฿)</label>
-          <input type="number" id="srp" value="0" min="0" step="500">
+          <input type="number" id="srp" value="0" min="0" step="500" inputmode="numeric">
           <label for="cons">ต้นทุนอื่นของคลินิก / เคส (฿)</label>
-          <input type="number" id="cons" value="300" min="0" step="50">
+          <input type="number" id="cons" value="300" min="0" step="50" inputmode="numeric">
           <div class="hint">เข็ม · ยาชา · วัสดุสิ้นเปลือง</div>
           <label for="cpm">คาดว่าทำได้กี่เคส / เดือน</label>
-          <input type="number" id="cpm" value="20" min="1" step="1">
+          <input type="number" id="cpm" value="20" min="1" step="1" inputmode="numeric">
           <label for="course">คอร์สแนะนำ (จำนวนครั้ง)</label>
-          <input type="number" id="course" value="3" min="1" step="1">
+          <input type="number" id="course" value="3" min="1" step="1" inputmode="numeric">
           <div class="hint" id="coursehint">–</div>
         </div>
       </div>
 
       <div class="toolbar noprint">
-        <button class="btn primary" id="print">พิมพ์ / บันทึก PDF</button>
+        <button class="btn primary" id="share">📤 แชร์เป็นรูป</button>
+        <button class="btn" id="print">🖨️ PDF</button>
         <label class="tog"><input type="checkbox" id="showcomp"> ตารางเทียบ</label>
       </div>
+      <div class="status noprint" id="status"></div>
       <div class="tip noprint">
-        <b>ให้ได้หน้าเดียวสวยๆ:</b> ในหน้าต่าง Print เลือก <b>More settings</b> →
-        ติ๊ก <b>Background graphics</b> · เอาติ๊ก <b>Headers and footers</b> ออก · Margins = <b>None</b><br>
-        <span style="color:var(--gold)">※ เปิด “ตารางเทียบ” จะเกิน 1 หน้า</span>
+        <b>แชร์เป็นรูป</b> — ระบบจะแปลงเอกสารเป็นภาพ A4 แล้วเปิดเมนูแชร์ของเครื่อง
+        ส่งเข้า LINE / WhatsApp / AirDrop ได้เลย · ถ้าเครื่องแชร์ตรงไม่ได้ จะแสดงรูปให้กดค้างบันทึกแทน<br>
+        <span style="color:var(--gold)">※ เปิด “ตารางเทียบ” รูปจะยาวขึ้น</span>
       </div>
-      <div class="savetag noprint" id="savetag" style="margin-top:9px">&nbsp;</div>
     </div>
 
     <!-- ===== ผลลัพธ์ ===== -->
@@ -340,6 +443,7 @@
 
       <div class="blk">
         <h2><span class="n">05</span> สั่งเพิ่มขึ้น กำไรเพิ่มเท่าไหร่</h2>
+        <div class="swipe noprint">← เลื่อนตารางดูทางขวาได้</div>
         <div class="tblwrap">
           <table>
             <thead><tr>
@@ -389,8 +493,27 @@
 
 </div></div>
 
+<!-- แถบปุ่มลอยบนมือถือ -->
+<div class="fab noprint">
+  <button class="btn primary" id="shareM">📤 แชร์เป็นรูป</button>
+  <button class="btn" id="printM">PDF</button>
+</div>
+
+<!-- โมดัลแสดงรูป -->
+<div class="modal noprint" id="modal">
+  <div class="mbox">
+    <h3>รูปเอกสารพร้อมส่ง</h3>
+    <p id="mhint">กดค้างที่รูป → <b>บันทึกรูปภาพ</b> แล้วส่งผ่าน LINE ได้เลย</p>
+    <img id="mimg" alt="Jaysean Profit Blueprint">
+    <div class="mrow">
+      <button class="btn primary" id="mdl">บันทึกรูป</button>
+      <button class="btn" id="mclose">ปิด</button>
+    </div>
+  </div>
+</div>
+
 <script>
-const KEY='jaysean_clinic_sheet_sales_v4';
+const KEY='jaysean_clinic_sheet_sales_v5';
 const $=id=>document.getElementById(id);
 const fmt=n=>Math.round(n).toLocaleString('en-US');
 const money=n=>(n<0?'-':'')+'฿'+fmt(Math.abs(n));
@@ -415,8 +538,7 @@ let tier=1, timer=null;
 function save(){
   clearTimeout(timer);
   timer=setTimeout(async()=>{
-    try{ await window.storage.set(KEY,JSON.stringify(state)); $('savetag').textContent='บันทึกแล้ว ✓'; }
-    catch(e){ $('savetag').textContent='บันทึกไม่สำเร็จ'; }
+    try{ await window.storage.set(KEY,JSON.stringify(state)); }catch(e){}
   },400);
 }
 async function load(){
@@ -460,8 +582,8 @@ function buildComp(){
     const c=state.comp[i]||{cost:0,srp:0};
     const tr=document.createElement('tr');
     tr.innerHTML=`<td>${n}</td>
-      <td><input type="number" step="100" value="${c.cost||''}" placeholder="0" data-i="${i}" data-k="cost"></td>
-      <td><input type="number" step="500" value="${c.srp||''}" placeholder="0" data-i="${i}" data-k="srp"></td>
+      <td><input type="number" step="100" inputmode="numeric" value="${c.cost||''}" placeholder="0" data-i="${i}" data-k="cost"></td>
+      <td><input type="number" step="500" inputmode="numeric" value="${c.srp||''}" placeholder="0" data-i="${i}" data-k="srp"></td>
       <td id="cp_${i}">–</td><td id="cm_${i}">–</td>`;
     tb.appendChild(tr);
   });
@@ -563,6 +685,74 @@ function calc(){
   storeAll();
 }
 
+/* ============ แชร์เป็นรูป ============ */
+const H2C='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+let h2cP=null;
+function loadH2C(){
+  if(window.html2canvas) return Promise.resolve();
+  if(h2cP) return h2cP;
+  h2cP=new Promise((res,rej)=>{
+    const s=document.createElement('script');
+    s.src=H2C;
+    s.onload=()=>res();
+    s.onerror=()=>{h2cP=null;rej(new Error('โหลดตัวแปลงรูปไม่ได้ — เช็คอินเทอร์เน็ตแล้วลองใหม่'));};
+    document.head.appendChild(s);
+  });
+  return h2cP;
+}
+function setStatus(t){ $('status').textContent=t||''; }
+function busy(on){
+  ['share','shareM','print','printM'].forEach(id=>{const b=$(id); if(b) b.disabled=on;});
+}
+function safeName(){
+  const c=$('f_clinic').value.trim().replace(/[\\/:*?"<>|]+/g,'').slice(0,40);
+  return `Jaysean-Profit-${c||'Clinic'}.png`;
+}
+async function makeBlob(){
+  await loadH2C();
+  const el=document.querySelector('.sheet');
+  const canvas=await window.html2canvas(el,{
+    scale:2, backgroundColor:'#fbf7ef', useCORS:true, logging:false,
+    windowWidth:1100,                       // กันไม่ให้ media query มือถือทำงานตอนถ่ายรูป
+    onclone:(doc)=>{ doc.body.classList.add('shotmode'); }
+  });
+  return await new Promise(r=>canvas.toBlob(r,'image/png'));
+}
+function dl(blob,name){
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url; a.download=name;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),4000);
+}
+let lastBlob=null;
+function showModal(blob){
+  lastBlob=blob;
+  $('mimg').src=URL.createObjectURL(blob);
+  $('modal').classList.add('on');
+}
+async function doShare(){
+  busy(true); setStatus('กำลังสร้างรูป…');
+  try{
+    const blob=await makeBlob();
+    const file=new File([blob],safeName(),{type:'image/png'});
+    if(navigator.canShare && navigator.canShare({files:[file]})){
+      try{
+        await navigator.share({files:[file],title:'Jaysean Profit Blueprint'});
+        setStatus('แชร์เรียบร้อย ✓'); busy(false); return;
+      }catch(err){
+        if(err && err.name==='AbortError'){ setStatus(''); busy(false); return; }
+        // แชร์ตรงไม่ได้ (เช่นถูกบล็อกใน iframe) → ตกไปใช้โมดัล
+      }
+    }
+    showModal(blob);
+    setStatus('เครื่องนี้แชร์ตรงไม่ได้ — บันทึกรูปแล้วส่งเองได้เลย');
+  }catch(e){
+    setStatus('ไม่สำเร็จ: '+(e.message||e));
+  }
+  busy(false);
+}
+
 $('tierseg').onclick=e=>{
   const b=e.target.closest('button'); if(!b)return;
   tier=+b.dataset.t;
@@ -572,7 +762,13 @@ $('tierseg').onclick=e=>{
 $('prod').onchange=applyProd;
 ['cpb','srp','cons','cpm','course'].forEach(id=>$(id).addEventListener('input',calc));
 ['f_clinic','f_rep','f_date'].forEach(id=>$(id).addEventListener('input',calc));
+$('share').onclick=doShare;
+$('shareM').onclick=doShare;
 $('print').onclick=()=>window.print();
+$('printM').onclick=()=>window.print();
+$('mdl').onclick=()=>{ if(lastBlob) dl(lastBlob,safeName()); };
+$('mclose').onclick=()=>$('modal').classList.remove('on');
+$('modal').onclick=e=>{ if(e.target===$('modal')) $('modal').classList.remove('on'); };
 $('showcomp').onchange=e=>{
   state.showcomp=e.target.checked;
   $('compcard').classList.toggle('hidden',!state.showcomp);
