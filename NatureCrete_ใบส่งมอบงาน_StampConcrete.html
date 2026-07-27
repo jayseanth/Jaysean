@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nature Crete — ใบส่งมอบงาน Stamp Concrete</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --brand:#6b4a2f;        /* stamp-concrete brown */
+    --brand-2:#8a6a49;      /* lighter brown */
+    --accent:#a9863f;       /* warm gold */
+    --stone:#6f6f6a;        /* concrete gray */
+    --ink:#2c2622;
+    --muted:#7c736b;
+    --paper:#fbf8f3;        /* ivory */
+    --line:#d9cfc2;
+    --field:#fffdf9;
+    --ok:#3c6e47;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Sarabun','Noto Sans Thai',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    background:#e9e3da;
+    color:var(--ink);
+    font-size:15px;
+    line-height:1.5;
+    -webkit-text-size-adjust:100%;
+  }
+
+  /* ---------- toolbar (screen only) ---------- */
+  .toolbar{
+    position:sticky;top:0;z-index:50;
+    background:#3a2c1e;color:#f4ece1;
+    display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+    padding:10px 16px;
+    box-shadow:0 2px 10px rgba(0,0,0,.25);
+  }
+  .toolbar .tt{font-weight:600;letter-spacing:.5px;margin-right:auto;font-size:14px;}
+  .toolbar .tt small{display:block;font-weight:400;color:#c9b79f;font-size:11px;letter-spacing:.3px;}
+  .btn{
+    border:0;border-radius:8px;padding:9px 16px;cursor:pointer;
+    font-family:inherit;font-size:14px;font-weight:600;
+    display:inline-flex;align-items:center;gap:7px;
+    transition:transform .05s ease, filter .15s ease;
+  }
+  .btn:active{transform:translateY(1px);}
+  .btn-primary{background:var(--accent);color:#241a0b;}
+  .btn-primary:hover{filter:brightness(1.06);}
+  .btn-ghost{background:rgba(255,255,255,.12);color:#f4ece1;}
+  .btn-ghost:hover{background:rgba(255,255,255,.2);}
+  .hint{font-size:12px;color:#c9b79f;width:100%;}
+
+  /* ---------- page frame ---------- */
+  .wrap{padding:22px 12px 60px;display:flex;justify-content:center;}
+  .sheet{
+    width:210mm;min-height:297mm;
+    background:var(--paper);
+    padding:16mm 15mm 14mm;
+    box-shadow:0 8px 30px rgba(0,0,0,.18);
+    position:relative;
+    border:1px solid #cfc4b4;
+  }
+  .sheet:before{ /* inset double frame */
+    content:"";position:absolute;inset:7mm;
+    border:1px solid var(--line);
+    box-shadow:0 0 0 3px var(--paper),0 0 0 4px #e7dccb;
+    pointer-events:none;
+  }
+  .inner{position:relative;z-index:1;}
+
+  /* ---------- letterhead ---------- */
+  .head{display:flex;gap:14px;align-items:flex-start;justify-content:space-between;}
+  .logo-box{
+    width:44mm;min-height:22mm;border:1.5px dashed var(--line);border-radius:6px;
+    display:flex;align-items:center;justify-content:center;text-align:center;
+    color:var(--muted);font-size:11px;padding:6px;background:var(--field);
+    overflow:hidden;
+  }
+  .logo-box img{max-width:100%;max-height:22mm;object-fit:contain;}
+  .logo-box.has-logo{border:1px solid var(--line);background:#fff;}
+  /* photo attachments */
+  .photos{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:5px;}
+  .photos:empty{display:none;}
+  .photo{position:relative;border:1px solid var(--line);border-radius:6px;overflow:hidden;aspect-ratio:4/3;background:#f3ece0;}
+  .photo img{width:100%;height:100%;object-fit:cover;display:block;}
+  .photo .rm{position:absolute;top:3px;right:3px;background:rgba(0,0,0,.6);color:#fff;border:0;border-radius:50%;width:20px;height:20px;cursor:pointer;font-size:13px;line-height:1;padding:0;}
+  .btn.addphoto{background:var(--brand);color:#fff;padding:7px 15px;font-size:13px;margin-top:7px;border-radius:8px;}
+  .btn.addphoto:hover{filter:brightness(1.08);}
+  .co{text-align:right;font-size:12.5px;line-height:1.45;max-width:95mm;}
+  .co .co-name{
+    font-family:'Playfair Display',serif;font-size:23px;font-weight:700;
+    color:var(--brand);letter-spacing:.5px;line-height:1.1;
+  }
+  .co .co-th{font-weight:600;color:var(--brand-2);font-size:13px;margin-top:1px;}
+  .rule{height:0;border-top:2px solid var(--brand);margin:9px 0 2px;}
+  .rule.thin{border-top:1px solid var(--accent);margin:2px 0 0;}
+
+  .doctitle{text-align:center;margin:13px 0 4px;}
+  .doctitle h1{
+    margin:0;font-family:'Playfair Display',serif;font-size:25px;color:var(--ink);
+    letter-spacing:1px;
+  }
+  .doctitle .sub{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);font-weight:600;}
+
+  .metarow{display:flex;justify-content:space-between;gap:10px;margin:10px 0 4px;font-size:13px;}
+
+  /* ---------- fields ---------- */
+  input,textarea{
+    font-family:inherit;font-size:13.5px;color:var(--ink);
+    border:0;border-bottom:1px solid var(--line);
+    background:var(--field);padding:3px 5px;width:100%;border-radius:3px 3px 0 0;
+  }
+  input:focus,textarea:focus{outline:0;border-bottom-color:var(--accent);background:#fff;}
+  textarea{resize:vertical;border:1px solid var(--line);border-radius:5px;min-height:44px;line-height:1.45;}
+  .f{margin-bottom:3px;}
+  .f label{display:block;font-size:10.5px;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:1px;}
+  .grid{display:grid;gap:6px 14px;}
+  .g2{grid-template-columns:1fr 1fr;}
+  .g3{grid-template-columns:1fr 1fr 1fr;}
+  .g4{grid-template-columns:1.4fr .8fr .8fr .8fr;}
+
+  /* ---------- section ---------- */
+  .sec{margin-top:12px;}
+  .sec-h{
+    display:flex;align-items:center;gap:8px;
+    font-weight:700;color:var(--brand);font-size:14px;
+    border-bottom:1.5px solid var(--brand);padding-bottom:3px;margin-bottom:7px;
+    letter-spacing:.3px;
+  }
+  .sec-h .no{
+    background:var(--brand);color:#fff;width:19px;height:19px;border-radius:50%;
+    display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex:0 0 auto;
+  }
+
+  /* ---------- work table ---------- */
+  table.work{width:100%;border-collapse:collapse;font-size:12.5px;}
+  table.work th{
+    background:#efe6d7;color:var(--brand);font-weight:600;font-size:11px;
+    text-align:left;padding:5px 6px;border:1px solid var(--line);letter-spacing:.3px;
+  }
+  table.work td{border:1px solid var(--line);padding:0;vertical-align:middle;}
+  table.work td input{border:0;border-radius:0;background:transparent;padding:5px 6px;}
+  table.work td input:focus{background:#fff;}
+  table.work tr:nth-child(even) td{background:#fdfbf6;}
+
+  /* ---------- checklist ---------- */
+  .checklist{display:grid;grid-template-columns:1fr 1fr;gap:4px 18px;}
+  .chk{display:flex;align-items:center;gap:8px;font-size:13px;padding:3px 0;}
+  .chk input[type=checkbox]{
+    width:17px;height:17px;flex:0 0 auto;accent-color:var(--ok);cursor:pointer;
+    border-bottom:0;
+  }
+
+  /* ---------- warranty box ---------- */
+  .box{
+    background:#f6efe3;border:1px solid var(--line);border-left:4px solid var(--accent);
+    border-radius:6px;padding:9px 12px;font-size:12.5px;line-height:1.55;
+  }
+  .box ul{margin:5px 0 0;padding-left:18px;}
+  .box li{margin-bottom:2px;}
+  .warr-line{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;font-size:13px;margin-bottom:4px;}
+  .warr-line b{color:var(--brand);}
+  .inline-in{display:inline-block;width:70px;border-bottom:1px solid var(--brand);background:var(--field);text-align:center;padding:2px 4px;border-radius:3px 3px 0 0;font-weight:600;}
+
+  /* ---------- signatures ---------- */
+  .signs{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:16px;}
+  .sign{text-align:center;font-size:12.5px;}
+  .sign .role{font-weight:700;color:var(--brand);margin-bottom:20mm;font-size:13px;}
+  .sign .sline{border-top:1px solid var(--ink);margin:0 6px;padding-top:4px;}
+  .sign .cap{color:var(--muted);font-size:11px;}
+  .sign .dline{margin-top:9px;color:var(--muted);font-size:11px;}
+  .sign .dline .u{display:inline-block;min-width:130px;border-bottom:1px dotted var(--muted);}
+
+  .foot{margin-top:14px;text-align:center;font-size:10.5px;color:var(--muted);letter-spacing:.4px;border-top:1px dashed var(--line);padding-top:6px;}
+  .foot b{color:var(--brand-2);}
+
+  /* ---------- modal ---------- */
+  .modal{position:fixed;inset:0;background:rgba(20,14,8,.82);display:none;align-items:center;justify-content:center;z-index:100;padding:18px;}
+  .modal.on{display:flex;}
+  .modal-card{background:#fff;border-radius:12px;max-width:420px;width:100%;padding:16px;text-align:center;max-height:92vh;overflow:auto;}
+  .modal-card h3{margin:2px 0 4px;color:var(--brand);}
+  .modal-card p{font-size:13px;color:var(--muted);margin:0 0 10px;}
+  .modal-card img{width:100%;border:1px solid var(--line);border-radius:8px;}
+  .modal-card .btn{margin-top:12px;width:100%;justify-content:center;background:var(--brand);color:#fff;}
+
+  /* ---------- print ---------- */
+  @page{size:A4;margin:0;}
+  @media print{
+    body{background:#fff;}
+    .noprint{display:none !important;}
+    .wrap{padding:0;}
+    .sheet{box-shadow:none;border:0;width:210mm;min-height:297mm;margin:0;}
+    input,textarea{background:transparent !important;border-bottom-color:#b9ac99;}
+    table.work td input{background:transparent !important;}
+    .logo-box{border-style:solid;}
+  }
+  /* image capture mode */
+  body.shotmode .noprint{display:none !important;}
+  body.shotmode .wrap{padding:0;}
+  body.shotmode .sheet{box-shadow:none;}
+
+  @media (max-width:800px){
+    body{font-size:16px;}
+    input,textarea{font-size:16px;}
+    .sheet{width:100%;padding:20px 14px;min-height:0;}
+    .sheet:before{inset:5px;}
+    .g2,.g3,.g4,.checklist{grid-template-columns:1fr;}
+    .photos{grid-template-columns:repeat(2,1fr);}
+    .co{max-width:none;}
+    .head{flex-direction:column;align-items:stretch;}
+    .co{text-align:left;}
+    table.work{font-size:14px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar noprint">
+  <div class="tt">Nature Crete · ใบส่งมอบงาน Stamp Concrete
+    <small>กรอกข้อมูลบนจอ → พิมพ์เป็น PDF หรือแชร์เป็นรูปเข้า LINE ได้เลย</small>
+  </div>
+  <button class="btn btn-ghost" onclick="uploadLogo()">🖼️ ใส่โลโก้</button>
+  <button class="btn btn-ghost" onclick="window.print()">🖨️ พิมพ์ / PDF</button>
+  <button class="btn btn-primary" onclick="shareImage()">📲 แชร์เป็นรูป</button>
+  <div class="hint">💡 หัวบริษัท / เบอร์ / เลขผู้เสียภาษี แก้ได้ในเอกสารเลย — พิมพ์ทับได้ทุกช่อง</div>
+  <input type="file" id="logoInput" accept="image/*" style="display:none" onchange="onLogo(event)">
+</div>
+
+<div class="wrap">
+  <div class="sheet" id="sheet">
+   <div class="inner">
+
+    <!-- letterhead -->
+    <div class="head">
+      <div class="logo-box has-logo" id="logoBox" onclick="uploadLogo()">
+        <img id="logoImg" src="data:image/jpeg;base64,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" alt="Nature Crete">
+      </div>
+      <div class="co">
+        <div class="co-name">NATURE CRETE</div>
+        <div class="co-th">DECORATIVE CONCRETE · สแตมป์คอนกรีต On-site &amp; Precast</div>
+        <div class="rule"></div><div class="rule thin"></div>
+        <div style="margin-top:5px">
+          <input value="บริษัท เนเจอร์ ครีต (ประเทศไทย) จำกัด">
+          <input value="205 หมู่ 7 ต.แช่ช้าง อ.สันกำแพง จ.เชียงใหม่ 50130">
+          <input value="โทร 053-332224  ·  Line: @ntch  ·  fb.com/NatureCrete">
+          <input value="เลขประจำตัวผู้เสียภาษี 0125553016231  ·  www.nc-th.com">
+        </div>
+      </div>
+    </div>
+
+    <div class="doctitle">
+      <div class="sub">Work Delivery &amp; Acceptance Note</div>
+      <h1>ใบส่งมอบงาน</h1>
+    </div>
+
+    <div class="metarow">
+      <div class="f" style="flex:1"><label>เลขที่เอกสาร (Doc No.)</label><input placeholder="NC-DL-2569-...."></div>
+      <div class="f" style="width:44mm"><label>วันที่ส่งมอบ</label><input type="date"></div>
+    </div>
+
+    <!-- 1. client / project -->
+    <div class="sec">
+      <div class="sec-h"><span class="no">1</span> ข้อมูลลูกค้า &amp; โครงการ</div>
+      <div class="grid g2">
+        <div class="f"><label>ชื่อลูกค้า / เจ้าของงาน</label><input></div>
+        <div class="f"><label>เบอร์ติดต่อ</label><input></div>
+        <div class="f" style="grid-column:1 / span 2"><label>สถานที่ / ที่อยู่หน้างาน</label><input></div>
+        <div class="f"><label>เลขที่ใบเสนอราคา / สัญญา</label><input></div>
+        <div class="f"><label>ชื่อโครงการ / อ้างอิงงาน</label><input></div>
+      </div>
+    </div>
+
+    <!-- 2. work detail -->
+    <div class="sec">
+      <div class="sec-h"><span class="no">2</span> รายละเอียดงานที่ส่งมอบ</div>
+      <table class="work">
+        <thead>
+          <tr>
+            <th style="width:34%">รายการงาน / ประเภท</th>
+            <th style="width:14%">ลาย (Pattern)</th>
+            <th style="width:14%">สี (Color)</th>
+            <th style="width:13%">พื้นที่ (ตร.ม.)</th>
+            <th style="width:25%">หมายเหตุ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><input placeholder="เช่น Stamp Concrete on-site — หน้าบ้าน"></td><td><input list="patterns"></td><td><input list="colors"></td><td><input></td><td><input></td></tr>
+          <tr><td><input placeholder="เช่น Precast แผ่นพื้นสำเร็จ"></td><td><input list="patterns"></td><td><input list="colors"></td><td><input></td><td><input></td></tr>
+          <tr><td><input></td><td><input list="patterns"></td><td><input list="colors"></td><td><input></td><td><input></td></tr>
+          <tr><td><input></td><td><input list="patterns"></td><td><input list="colors"></td><td><input></td><td><input></td></tr>
+          <tr style="font-weight:700"><td style="text-align:right;padding:5px 6px;background:#efe6d7;color:var(--brand)">รวมพื้นที่ทั้งหมด</td><td style="background:#efe6d7"></td><td style="background:#efe6d7"></td><td><input placeholder="รวม" style="font-weight:700"></td><td style="background:#efe6d7"><input placeholder="ตร.ม."></td></tr>
+        </tbody>
+      </table>
+      <div class="grid g3" style="margin-top:7px">
+        <div class="f"><label>วันเริ่มงาน</label><input type="date"></div>
+        <div class="f"><label>วันแล้วเสร็จ</label><input type="date"></div>
+        <div class="f"><label>ประเภทการเคลือบผิว (Sealer)</label><input placeholder="เช่น กันลื่น / เงา / ด้าน"></div>
+      </div>
+    </div>
+
+    <!-- 3. QC checklist -->
+    <div class="sec">
+      <div class="sec-h"><span class="no">3</span> รายการตรวจรับงาน (Checklist ตรวจ QC)</div>
+      <div class="checklist">
+        <label class="chk"><input type="checkbox">ผิวหน้าเรียบร้อย ไม่มีรอยแตกร้าว</label>
+        <label class="chk"><input type="checkbox">ลาย &amp; สี (Color Hardener 3IN1) ตรงตามแบบ</label>
+        <label class="chk"><input type="checkbox">ความลาดเอียง ระบายน้ำดี ไม่มีน้ำขัง</label>
+        <label class="chk"><input type="checkbox">เคลือบ Acrylic กันซึม/กันเชื้อรา ทั่วถึง</label>
+        <label class="chk"><input type="checkbox">ขอบงาน / รอยต่อ / ร่องแบบพิมพ์ เรียบร้อย</label>
+        <label class="chk"><input type="checkbox">ความหนาคอนกรีต ~5 ซม. + Wire Mesh ตามสเปก</label>
+        <label class="chk"><input type="checkbox">ทำความสะอาดพื้นที่หน้างานเรียบร้อย</label>
+        <label class="chk"><input type="checkbox">เก็บงานรายละเอียด (Defect) ครบถ้วน</label>
+      </div>
+    </div>
+
+    <!-- 4. warranty -->
+    <div class="sec">
+      <div class="sec-h"><span class="no">4</span> การรับประกันงาน</div>
+      <div class="box">
+        <div class="warr-line"><b>ระยะเวลารับประกัน:</b> <input class="inline-in" value="12"> เดือน นับจากวันส่งมอบงาน (ครอบคลุมงานฝีมือและการยึดเกาะของผิวคอนกรีตพิมพ์ลาย)</div>
+        <b>ขอบเขต / เงื่อนไข:</b>
+        <ul>
+          <li>รับประกันการแตกร้าวที่เกิดจากฝีมือช่างและกระบวนการทำงาน</li>
+          <li>ไม่ครอบคลุมความเสียหายจากการใช้งานผิดประเภท, น้ำหนักเกินกำหนด, การทุบเจาะ หรือภัยธรรมชาติ</li>
+          <li>ไม่ครอบคลุมรอยร้าวจากการทรุดตัวของโครงสร้าง/พื้นดินเดิมที่ไม่ได้อยู่ในความรับผิดชอบของผู้รับเหมา</li>
+          <li>การซีดจางของสีตามธรรมชาติจากแสงแดด ถือเป็นเรื่องปกติของงานคอนกรีตพิมพ์ลาย</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 5. care -->
+    <div class="sec">
+      <div class="sec-h"><span class="no">5</span> คำแนะนำการดูแลรักษา &amp; หมายเหตุ</div>
+      <div class="grid g2">
+        <div class="box" style="border-left-color:var(--stone)">
+          <b>การดูแลรักษาเบื้องต้น</b>
+          <ul>
+            <li>งดเดิน/วางของหนักบนพื้น 24–48 ชม.แรกหลังส่งมอบ</li>
+            <li>ทำความสะอาดด้วยน้ำเปล่าหรือน้ำยาอ่อน ๆ หลีกเลี่ยงกรดแรง</li>
+            <li>ควรเคลือบ Sealer ซ้ำทุก 1–2 ปี เพื่อรักษาความเงางามและอายุการใช้งาน</li>
+          </ul>
+        </div>
+        <div class="f"><label>หมายเหตุเพิ่มเติม</label>
+          <textarea placeholder="เช่น รายการที่ตกลงเพิ่มเติม / เงื่อนไขพิเศษ ..." style="min-height:78px"></textarea>
+        </div>
+      </div>
+      <div class="f" style="margin-top:8px">
+        <label>รูปแนบผลงาน (ก่อน–หลัง) <span class="noprint" style="text-transform:none;letter-spacing:0;color:var(--accent);font-weight:600">— แตะปุ่มเพื่อถ่าย/เลือกรูปจากมือถือ</span></label>
+        <div class="photos" id="photoGrid"></div>
+        <button type="button" class="btn addphoto noprint" onclick="addPhotos()">📷 แนบรูปจากมือถือ</button>
+        <input type="file" id="photoInput" accept="image/*" multiple style="display:none" onchange="onPhotos(event)">
+      </div>
+    </div>
+
+    <!-- signatures -->
+    <div class="signs">
+      <div class="sign">
+        <div class="role">ผู้ส่งมอบงาน (Nature Crete)</div>
+        <div class="sline"><span class="cap">ลงชื่อ / ชื่อ-นามสกุล</span></div>
+        <div class="dline">วันที่ <span class="u"></span></div>
+      </div>
+      <div class="sign">
+        <div class="role">ผู้รับมอบงาน (ลูกค้า)</div>
+        <div class="sline"><span class="cap">ลงชื่อ / ชื่อ-นามสกุล</span></div>
+        <div class="dline">วันที่ <span class="u"></span></div>
+      </div>
+    </div>
+
+    <div class="foot">
+      เอกสารฉบับนี้ยืนยันว่าผู้รับมอบงานได้ตรวจรับงานเรียบร้อยแล้วตามรายการข้างต้น ·
+      <b>NATURE CRETE</b> — Stamp Concrete Specialist · On-site &amp; Precast
+    </div>
+
+   </div>
+  </div>
+</div>
+
+<!-- real Nature Crete stamp patterns (20) & color hints -->
+<datalist id="patterns">
+  <option>European Fan</option><option>Castle Stone</option><option>New Random Stone</option>
+  <option>Random Stone</option><option>New Ashlar</option><option>Ashlar Slate</option>
+  <option>Grand Ashlar</option><option>Slate Texture</option><option>European Cobble</option>
+  <option>London Cobble</option><option>Herring Bone Brick</option><option>Granite 4x4</option>
+  <option>Granite Deep Joint</option><option>Random River Rock</option><option>Field Stone</option>
+  <option>Reflection</option><option>Wood Plank</option><option>Old English Cobble</option>
+  <option>Cobble Star</option><option>Cobble Circle</option>
+</datalist>
+<datalist id="colors">
+  <option>เทา 1062</option><option>น้ำตาลอิฐ 1231</option><option>น้ำตาลอ่อน 1261</option>
+  <option>น้ำตาล 1262</option><option>น้ำตาลเข้ม 1263</option><option>แดง 1333</option>
+  <option>เขียว 1553</option><option>ส้ม 0231</option><option>เหลือง 0111</option>
+</datalist>
+
+<!-- share modal -->
+<div class="modal noprint" id="modal">
+  <div class="modal-card">
+    <h3>รูปพร้อมแชร์แล้ว 📲</h3>
+    <p>กดค้างที่รูปเพื่อบันทึก แล้วส่งเข้า LINE / WhatsApp ได้เลย</p>
+    <img id="shotImg" alt="delivery note">
+    <button class="btn" onclick="closeModal()">ปิด</button>
+  </div>
+</div>
+
+<script>
+  /* ---------- logo upload ---------- */
+  function uploadLogo(){ document.getElementById('logoInput').click(); }
+  function onLogo(e){
+    var f = e.target.files[0]; if(!f) return;
+    var r = new FileReader();
+    r.onload = function(ev){
+      var box = document.getElementById('logoBox');
+      box.innerHTML = '<img src="'+ev.target.result+'" alt="logo">';
+    };
+    r.readAsDataURL(f);
+  }
+
+  /* ---------- attach photos (mobile camera / gallery) ---------- */
+  var photos=[];
+  function addPhotos(){ document.getElementById('photoInput').click(); }
+  function onPhotos(e){
+    var files=[].slice.call(e.target.files);
+    files.forEach(function(f){
+      var r=new FileReader();
+      r.onload=function(ev){ photos.push(ev.target.result); renderPhotos(); };
+      r.readAsDataURL(f);
+    });
+    e.target.value='';
+  }
+  function renderPhotos(){
+    var g=document.getElementById('photoGrid');
+    g.innerHTML=photos.map(function(src,i){
+      return '<div class="photo"><img src="'+src+'"><button type="button" class="rm noprint" onclick="rmPhoto(event,'+i+')">×</button></div>';
+    }).join('');
+  }
+  function rmPhoto(ev,i){ ev.stopPropagation(); photos.splice(i,1); renderPhotos(); }
+
+  /* ---------- share as image ---------- */
+  var h2cLoaded = false;
+  function loadH2C(){
+    return new Promise(function(res,rej){
+      if(h2cLoaded && window.html2canvas) return res();
+      var s=document.createElement('script');
+      s.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+      s.onload=function(){h2cLoaded=true;res();};
+      s.onerror=function(){rej(new Error('load failed'));};
+      document.head.appendChild(s);
+    });
+  }
+
+  async function shareImage(){
+    try{
+      await loadH2C();
+    }catch(err){
+      alert('โหลดตัวสร้างรูปไม่สำเร็จ ลองใช้ปุ่ม "พิมพ์ / PDF" แทนได้ครับ');
+      return;
+    }
+    var sheet = document.getElementById('sheet');
+    try{
+      var canvas = await html2canvas(sheet,{
+        backgroundColor:'#fbf8f3',
+        scale:2,
+        windowWidth:1100,
+        useCORS:true,
+        onclone:function(doc){ doc.body.classList.add('shotmode'); }
+      });
+      canvas.toBlob(async function(blob){
+        if(!blob){ alert('สร้างรูปไม่สำเร็จ ลองใหม่อีกครั้งครับ'); return; }
+        var file = new File([blob],'Nature-Crete-ใบส่งมอบงาน.png',{type:'image/png'});
+        if(navigator.canShare && navigator.canShare({files:[file]})){
+          try{
+            await navigator.share({files:[file],title:'ใบส่งมอบงาน Nature Crete'});
+            return;
+          }catch(e){
+            if(e && e.name==='AbortError') return; /* user cancelled */
+          }
+        }
+        /* fallback: show modal */
+        var url = URL.createObjectURL(blob);
+        document.getElementById('shotImg').src = url;
+        document.getElementById('modal').classList.add('on');
+      },'image/png');
+    }catch(err){
+      alert('สร้างรูปไม่สำเร็จ ลองใช้ปุ่ม "พิมพ์ / PDF" แทนได้ครับ');
+    }
+  }
+  function closeModal(){ document.getElementById('modal').classList.remove('on'); }
+  document.getElementById('modal').addEventListener('click',function(e){ if(e.target===this) closeModal(); });
+</script>
+</body>
+</html>
